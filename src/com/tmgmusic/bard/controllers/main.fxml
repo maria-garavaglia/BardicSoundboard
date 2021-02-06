@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
+<VBox fx:id="mainVBox" fx:controller="com.tmgmusic.bard.controllers.Controller"
+      xmlns:fx="http://javafx.com/fxml" spacing="10">
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15" />
+    </padding>
+    <Button prefWidth="100" text="Add Song" onAction="#addSong"/>
+    <ListView fx:id="songListView" />
+    <HBox spacing="20">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10" />
+        </padding>
+        <Label text="Current Song: " />
+        <Label fx:id="currentSong"/>
+    </HBox>
+    <HBox spacing="20">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10" />
+        </padding>
+        <Button text="Play" prefWidth="100" onAction="#play" />
+        <Button text="Stop" prefWidth="100" onAction="#stop" />
+    </HBox>
+</VBox>

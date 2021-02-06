@@ -3,7 +3,7 @@ module BardicSoundboard {
    requires javafx.fxml;
    requires javafx.media;
 
-   exports sample to javafx.graphics, javafx.fxml;
+   exports com.tmgmusic.bard.controllers to javafx.graphics, javafx.fxml;
 
-   opens sample to javafx.fxml;
+   opens com.tmgmusic.bard.controllers to javafx.fxml;
 }
