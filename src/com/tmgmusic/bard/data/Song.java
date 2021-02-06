@@ -4,8 +4,8 @@ import java.net.URL;
 
 public class Song
 {
-   private String name;
-   private URL url;
+   private final String name;
+   private final URL url;
 
    public Song(String name, URL url)
    {
@@ -18,19 +18,9 @@ public class Song
       return name;
    }
 
-   public void setName(String name)
-   {
-      this.name = name;
-   }
-
    public URL getUrl()
    {
       return url;
-   }
-
-   public void setUrl(URL url)
-   {
-      this.url = url;
    }
 
    @Override

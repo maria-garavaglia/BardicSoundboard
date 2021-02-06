@@ -13,7 +13,7 @@ public class Main extends Application
    public void start(Stage primaryStage) throws Exception
    {
       Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
-      primaryStage.setTitle("Media Player");
+      primaryStage.setTitle("Bardic Soundboard");
       primaryStage.setScene(new Scene(root, 800, 400));
       primaryStage.show();
    }
