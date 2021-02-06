@@ -1,4 +1,8 @@
-package main.java.com.tmgmusic.bard.data;
+package com.tmgmusic.bard.data;
+
+import com.github.cliftonlabs.json_simple.JsonArray;
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.tmgmusic.bard.json.CharacterKeys;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,18 +10,27 @@ import java.util.Map;
 public class Character
 {
    private String name;
-   private Map<String, Spell> spells;
+   private Map<String, Spell> spells = new HashMap<>();
 
    public Character()
    {
       name = "John Doe";
-      spells = new HashMap<>();
    }
 
    public Character(String name)
    {
       this.name = name;
-      spells = new HashMap<>();
+   }
+
+   public Character(JsonObject json)
+   {
+      name = json.getString(CharacterKeys.KEY_CHARNAME);
+      JsonArray spellsJson = json.getCollection(CharacterKeys.KEY_SPELLS);
+      for(int index = 0; index < spellsJson.size(); index++)
+      {
+         var newSpell = new Spell(spellsJson.getMap(index));
+         spells.put(newSpell.getName(), newSpell);
+      }
    }
 
    public String getName()

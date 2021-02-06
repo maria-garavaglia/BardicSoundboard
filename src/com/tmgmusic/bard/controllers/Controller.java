@@ -1,5 +1,10 @@
 package com.tmgmusic.bard.controllers;
 
+import com.github.cliftonlabs.json_simple.JsonException;
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsoner;
+import com.tmgmusic.bard.data.Character;
+import com.tmgmusic.bard.data.Spell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,12 +17,14 @@ import javafx.stage.FileChooser;
 import com.tmgmusic.bard.data.Song;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.net.MalformedURLException;
 
 public class Controller
 {
 
-   private ObservableList<Song> songs;
+   private ObservableList<Spell> songs;
    private FileChooser fileChooser;
    private MediaPlayer player;
 
@@ -25,7 +32,7 @@ public class Controller
    private VBox mainVBox;
 
    @FXML
-   private ListView<Song> songListView;
+   private ListView<Spell> songListView;
 
    @FXML
    private Label currentSong;
@@ -43,11 +50,12 @@ public class Controller
       // Initialize the list
       songs = FXCollections.observableArrayList();
 
-      var folder = new File("C:/Users/tgaravaglia/Music/Brutal_Legend/Solos/");
-      for(var song : folder.listFiles())
-      {
-         songs.add(new Song(song.getName(), song.toURI().toURL()));
-      }
+      load("cfg/Hrothgar.json");
+//      var folder = new File("C:/Users/tgaravaglia/Music/Brutal_Legend/Solos/");
+//      for(var song : folder.listFiles())
+//      {
+//         songs.add(new Song(song.getName(), song.toURI().toURL()));
+//      }
       songListView.setItems(songs);
       songListView.getSelectionModel().selectFirst();
    }
@@ -55,26 +63,24 @@ public class Controller
    @FXML
    public void addSong() throws MalformedURLException
    {
-      File file = fileChooser.showOpenDialog(mainVBox.getScene().getWindow());
-      if(file != null)
-      {
-         songs.add(new Song(file.getName(), file.toURI().toURL()));
-         songListView.setItems(songs);
-      }
-      else
-      {
-         System.out.println("File not found");
-      }
+//      File file = fileChooser.showOpenDialog(mainVBox.getScene().getWindow());
+//      if(file != null)
+//      {
+//         songs.add(new Song(file.getName(), file.toURI().toURL()));
+//         songListView.setItems(songs);
+//      }
+//      else
+//      {
+//         System.out.println("File not found");
+//      }
    }
-
-   private int time = 0;
 
    @FXML
    public void play()
    {
-      Song song = songListView.getSelectionModel().getSelectedItem();
-      System.out.println("Playing audio: " + song.getUrl().toExternalForm());
-      Media media = new Media(song.getUrl().toExternalForm());
+      Spell song = songListView.getSelectionModel().getSelectedItem();
+      System.out.println("Playing audio: " + song.getAudio().toURI().toString());
+      Media media = new Media(song.getAudio().toURI().toString());
 
       if(player != null && player.getStatus() == MediaPlayer.Status.PLAYING)
       {
@@ -105,6 +111,30 @@ public class Controller
       else if(player.getStatus() == MediaPlayer.Status.PLAYING)
       {
          player.stop();
+      }
+   }
+
+   private void load(String jsonFile)
+   {
+
+      try
+      {
+         var reader = new FileReader(jsonFile);
+         JsonObject json = (JsonObject)Jsoner.deserialize(reader);
+         Character newChar = new Character(json);
+         var spellList = newChar.getSpells();
+
+         for(var spellName : spellList.keySet())
+         {
+            Spell newSpell = spellList.get(spellName);
+            songs.add(newSpell);
+         }
+
+
+      }
+      catch(JsonException | FileNotFoundException e)
+      {
+         e.printStackTrace();
       }
    }
 
