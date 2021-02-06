@@ -43,15 +43,11 @@ public class Controller
       // Initialize the list
       songs = FXCollections.observableArrayList();
 
-      var folder = new File("C:/Users/tgaravaglia/Music/Brutal_Legend/Solos/Eddie/");
+      var folder = new File("C:/Users/tgaravaglia/Music/Brutal_Legend/Solos/");
       for(var song : folder.listFiles())
       {
          songs.add(new Song(song.getName(), song.toURI().toURL()));
       }
-//      var working = new File("E:/Users/tyler.garavaglia/Music/MediaMonkey/Fats Waller/Unknown Album/01 Chant of the Groove.mp3");
-      var working = new File("C:/Users/tgaravaglia/Downloads/test.mp3");
-//      var working = new File("C:/Users/tgaravaglia/Downloads/yt1s.com - 1939 HITS ARCHIVE Undecided  Chick Webb Ella Fitzgerald vocal_test.mp3");
-      songs.add(new Song(working.getName(), working.toURI().toURL()));
       songListView.setItems(songs);
       songListView.getSelectionModel().selectFirst();
    }
