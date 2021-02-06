@@ -5,7 +5,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<GridPane xmlns="http://javafx.com/javafx/11.0.1"
+<GridPane id="gridPane"
+          xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="sample.Controller"
           stylesheets="/sample/sample.css">
