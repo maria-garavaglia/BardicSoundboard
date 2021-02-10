@@ -1,7 +1,7 @@
-package com.tmgmusic.bard.data;
+package com.tmgmusic.data;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
-import com.tmgmusic.bard.json.SpellKeys;
+import com.tmgmusic.json.SpellKeys;
 
 import java.io.File;
 

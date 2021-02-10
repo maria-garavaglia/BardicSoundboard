@@ -1,10 +1,10 @@
-package com.tmgmusic.bard.controllers;
+package com.tmgmusic.controllers;
 
 import com.github.cliftonlabs.json_simple.JsonException;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
-import com.tmgmusic.bard.data.Character;
-import com.tmgmusic.bard.data.Spell;
+import com.tmgmusic.data.Character;
+import com.tmgmusic.data.Spell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,14 +14,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
-import com.tmgmusic.bard.data.Song;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.MalformedURLException;
 
-public class Controller
+public class MainWindow
 {
 
    private ObservableList<Spell> songs;
@@ -97,6 +96,7 @@ public class Controller
          }
       });
 
+      player.setVolume(0.2);
       player.play();
       currentSong.setText(song.getName());
    }

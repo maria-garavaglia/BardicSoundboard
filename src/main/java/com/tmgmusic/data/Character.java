@@ -1,8 +1,8 @@
-package com.tmgmusic.bard.data;
+package com.tmgmusic.data;
 
 import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
-import com.tmgmusic.bard.json.CharacterKeys;
+import com.tmgmusic.json.CharacterKeys;
 
 import java.util.HashMap;
 import java.util.Map;

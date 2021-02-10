@@ -1,11 +1,11 @@
-package com.tmgmusic.bard.json;
+package com.tmgmusic.json;
 
 import com.github.cliftonlabs.json_simple.JsonKey;
 
-public enum CharacterKeys implements JsonKey
+public enum SpellKeys implements JsonKey
 {
-   KEY_CHARNAME("charName"),
-   KEY_SPELLS("spells");
+   KEY_NAME("name"),
+   KEY_FILE("file");
 
    private final Object value;
 
@@ -14,7 +14,7 @@ public enum CharacterKeys implements JsonKey
     *
     * @param value represents a valid default for the key.
     */
-   CharacterKeys(final Object value)
+   SpellKeys(final Object value)
    {
       this.value = value;
    }

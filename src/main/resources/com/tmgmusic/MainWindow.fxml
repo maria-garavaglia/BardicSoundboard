@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Label?>
-<VBox fx:id="mainVBox" fx:controller="com.tmgmusic.bard.controllers.Controller"
+<VBox fx:id="mainVBox" fx:controller="com.tmgmusic.controllers.MainWindow"
       xmlns:fx="http://javafx.com/fxml" spacing="10">
     <padding>
         <Insets top="15" right="15" bottom="15" left="15" />

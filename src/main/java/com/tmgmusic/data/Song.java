@@ -1,4 +1,4 @@
-package com.tmgmusic.bard.data;
+package com.tmgmusic.data;
 
 import java.net.URL;
 
