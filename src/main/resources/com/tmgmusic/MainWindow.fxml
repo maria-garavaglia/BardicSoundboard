@@ -12,7 +12,6 @@
     <padding>
         <Insets top="15" right="15" bottom="15" left="15" />
     </padding>
-    <Button prefWidth="100" text="Add Song" onAction="#addSong"/>
     <ListView fx:id="songListView" />
     <HBox spacing="20">
         <padding>

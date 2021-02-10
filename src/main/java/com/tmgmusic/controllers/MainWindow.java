@@ -50,28 +50,9 @@ public class MainWindow
       songs = FXCollections.observableArrayList();
 
       load("cfg/Hrothgar.json");
-//      var folder = new File("C:/Users/tgaravaglia/Music/Brutal_Legend/Solos/");
-//      for(var song : folder.listFiles())
-//      {
-//         songs.add(new Song(song.getName(), song.toURI().toURL()));
-//      }
+
       songListView.setItems(songs);
       songListView.getSelectionModel().selectFirst();
-   }
-
-   @FXML
-   public void addSong() throws MalformedURLException
-   {
-//      File file = fileChooser.showOpenDialog(mainVBox.getScene().getWindow());
-//      if(file != null)
-//      {
-//         songs.add(new Song(file.getName(), file.toURI().toURL()));
-//         songListView.setItems(songs);
-//      }
-//      else
-//      {
-//         System.out.println("File not found");
-//      }
    }
 
    @FXML
