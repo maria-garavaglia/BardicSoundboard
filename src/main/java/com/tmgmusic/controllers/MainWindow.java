@@ -87,7 +87,10 @@ public class MainWindow implements PropertyChangeListener
 
    private void loadCharacter(Character newCharacter)
    {
-      songs.removeAll();
+      songs.clear();
+      System.out.println("Removed all spells, size = " + songs.size());
       songs.addAll(newCharacter.getSpells().values());
+      System.out.println("Added " + newCharacter.getSpells().size() + " spells");
+      System.out.println("Total " + songs.size() + " spells");
    }
 }
