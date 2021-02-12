@@ -54,12 +54,7 @@ public class MainWindow implements PropertyChangeListener
    }
 
    @FXML
-   public void play()
-   {
-      play(songListView.getSelectionModel().getSelectedItem());
-   }
-
-   private void play(Spell toPlay)
+   private void play()
    {
       Spell song = songListView.getSelectionModel().getSelectedItem();
       System.out.println("Playing audio: " + song.getAudio().toURI().toString());
