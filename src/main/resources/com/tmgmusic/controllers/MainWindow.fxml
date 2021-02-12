@@ -11,7 +11,7 @@
 <VBox fx:controller="com.tmgmusic.controllers.MainWindow"
       xmlns:fx="http://javafx.com/fxml">
     <MainMenu fx:id="menu"/>
-    <VBox fx:id="mainVBox">
+    <VBox>
         <padding>
             <Insets top="15" right="15" bottom="15" left="15" />
         </padding>

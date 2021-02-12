@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -20,11 +19,6 @@ public class MainWindow implements PropertyChangeListener
 
    private ObservableList<Spell> songs;
    private MediaPlayer player;
-
-   private Character character;
-
-   @FXML
-   private VBox mainVBox;
 
    @FXML
    private MainMenu menu;
@@ -59,14 +53,7 @@ public class MainWindow implements PropertyChangeListener
       }
 
       player = new MediaPlayer(media);
-      player.setOnError(new Runnable()
-      {
-         @Override
-         public void run()
-         {
-            player.getError().printStackTrace();
-         }
-      });
+      player.setOnError(() -> player.getError().printStackTrace());
 
       player.setVolume(0.2);
       player.play();
@@ -76,11 +63,7 @@ public class MainWindow implements PropertyChangeListener
    @FXML
    public void stop()
    {
-      if(player == null)
-      {
-         return;
-      }
-      else if(player.getStatus() == MediaPlayer.Status.PLAYING)
+      if(player != null && player.getStatus() == MediaPlayer.Status.PLAYING)
       {
          player.stop();
       }
@@ -95,9 +78,6 @@ public class MainWindow implements PropertyChangeListener
    private void loadCharacter(Character newCharacter)
    {
       songs.removeAll();
-      for(var spell : newCharacter.getSpells().values())
-      {
-         songs.add(spell);
-      }
+      songs.addAll(newCharacter.getSpells().values());
    }
 }
