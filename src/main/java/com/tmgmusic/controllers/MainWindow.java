@@ -5,11 +5,9 @@ import com.tmgmusic.data.Spell;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -38,15 +36,11 @@ public class MainWindow implements PropertyChangeListener
 
       songListView.setItems(songs);
       songListView.getSelectionModel().selectFirst();
-      songListView.setOnMouseClicked(new EventHandler<MouseEvent>()
+      songListView.setOnMouseClicked(click ->
       {
-         @Override
-         public void handle(MouseEvent click)
+         if(click.getClickCount() == 2)
          {
-            if(click.getClickCount() == 2)
-            {
-               play();
-            }
+            play();
          }
       });
 
@@ -66,7 +60,10 @@ public class MainWindow implements PropertyChangeListener
       }
 
       player = new MediaPlayer(media);
-      player.setOnError(() -> player.getError().printStackTrace());
+      player.setOnError(() ->
+      {
+         throw player.getError();
+      });
 
       player.setVolume(0.2);
       player.play();
