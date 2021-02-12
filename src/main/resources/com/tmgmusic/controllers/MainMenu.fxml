@@ -12,7 +12,7 @@
         <Menu text="File">
             <items>
 <!--                <MenuItem text="New"/>-->
-                <MenuItem text="Open"/>
+                <MenuItem text="Open" onAction="#openFile"/>
 <!--                <MenuItem text="Save"/>-->
 <!--                <MenuItem text="Save As"/>-->
 <!--                <SeparatorMenuItem  />-->
