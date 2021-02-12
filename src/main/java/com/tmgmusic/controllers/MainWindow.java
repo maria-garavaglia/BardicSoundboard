@@ -31,6 +31,9 @@ public class MainWindow
    private VBox mainVBox;
 
    @FXML
+   private MainMenu menu;
+
+   @FXML
    private ListView<Spell> songListView;
 
    @FXML
@@ -49,7 +52,7 @@ public class MainWindow
       // Initialize the list
       songs = FXCollections.observableArrayList();
 
-      load("cfg/Hrothgar.json");
+      //load("cfg/Hrothgar.json");
 
       songListView.setItems(songs);
       songListView.getSelectionModel().selectFirst();
