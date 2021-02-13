@@ -8,33 +8,48 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
+        <javafxVersion>15.0.1</javafxVersion>
     </properties>
+
     <dependencies>
+
+        <!-- JSON library (not modular) -->
         <dependency>
             <groupId>com.github.cliftonlabs</groupId>
             <artifactId>json-simple</artifactId>
             <version>3.1.1</version>
         </dependency>
-        <!--java FX-->
+
+        <!-- Reflection library (not modular) -->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.12</version>
+        </dependency>
+
+        <!-- javaFX (all modular) -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>15.0.1</version>
+            <version>${javafxVersion}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>15.0.1</version>
+            <version>${javafxVersion}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
-            <version>15.0.1</version>
+            <version>${javafxVersion}</version>
         </dependency>
         <!--/java FX-->
+
     </dependencies>
+
     <build>
         <plugins>
+            <!-- for javaFX -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -43,14 +58,117 @@
                     <release>15</release>
                 </configuration>
             </plugin>
+
+            <!-- Copies all dependency JARs into target/modules. Moditect will overwrite the non-modular ones later. -->
             <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.4</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <mainClass>com.tmgmusic.App</mainClass>
-                    <launcher>BardicSoundboard</launcher>
+                    <outputDirectory>${project.build.directory}/modules</outputDirectory>
+                    <overWriteReleases>false</overWriteReleases>
+                    <overWriteSnapshots>true</overWriteSnapshots>
                 </configuration>
+            </plugin>
+
+            <!-- Moditect -->
+            <plugin>
+                <groupId>org.moditect</groupId>
+                <artifactId>moditect-maven-plugin</artifactId>
+                <version>1.0.0.RC1</version>
+                <executions>
+                    <!-- Adds module-info.java to non-modular libraries so jlink can use them -->
+                    <execution>
+                        <id>add-module-infos</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>add-module-info</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/modules</outputDirectory>
+                            <overwriteExistingFiles>true</overwriteExistingFiles>
+                            <modules>
+                                <!-- json.simple -->
+                                <module>
+                                    <artifact>
+                                        <groupId>com.github.cliftonlabs</groupId>
+                                        <artifactId>json-simple</artifactId>
+                                        <version>3.1.1</version>
+                                    </artifact>
+                                    <moduleInfoSource>
+                                        module json.simple {
+                                            exports com.github.cliftonlabs.json_simple;
+                                        }
+                                    </moduleInfoSource>
+                                </module>
+
+                                <!-- reflections -->
+                                <module>
+                                    <artifact>
+                                        <groupId>org.reflections</groupId>
+                                        <artifactId>reflections</artifactId>
+                                        <version>0.9.12</version>
+                                    </artifact>
+                                    <moduleInfoSource>
+                                        module reflections {
+                                            exports org.reflections;
+                                            exports org.reflections.adapters;
+                                            exports org.reflections.scanners;
+                                            exports org.reflections.serializers;
+                                            exports org.reflections.util;
+                                            exports org.reflections.vfs;
+                                        }
+                                    </moduleInfoSource>
+                                </module>
+                            </modules>
+
+                            <!-- My project module, apparently this needs to be defined here too even though module-info already exists -->
+                            <module>
+                                <mainClass>com.tmgmusic.App</mainClass>
+                                <moduleInfoFile>${project.build.sourceDirectory}/module-info.java</moduleInfoFile>
+                            </module>
+                        </configuration>
+                    </execution>
+
+                    <!-- Uses jlink to create a portable runtime image of the app -->
+                    <execution>
+                        <id>create-runtime-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>create-runtime-image</goal>
+                        </goals>
+                        <configuration>
+                            <modulePath>
+                                <path>${project.build.directory}/modules</path>
+                            </modulePath>
+                            <modules>
+                                <module>com.tmgmusic</module>
+                                <module>java.desktop</module>
+                                <module>javafx.controls</module>
+                                <module>javafx.fxml</module>
+                                <module>javafx.media</module>
+                                <module>json.simple</module>
+                                <module>reflections</module>
+                            </modules>
+                            <launcher>
+                                <name>BardicSoundboard</name>
+                                <module>com.tmgmusic</module>
+                            </launcher>
+                            <outputDirectory>
+                                ${project.build.directory}/jlink-image
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

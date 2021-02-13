@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+//import org.reflections.Reflections;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,44 +36,46 @@ public class App extends Application {
 
     private static void findOrCreateHomeDirs() throws IOException
     {
-        var dirNames = new String[]{
-              CHARACTERS_DIR,
-              AUDIO_DIR
-        };
-
-        for(var dirName : dirNames)
-        {
-            var dir = new File(ROOT_DIR + dirName);
-            // create if it doesn't exist yet
-            if(!dir.exists())
-            {
-                System.out.println("Directory \"" + ROOT_DIR + dirName + "\" not found, creating new one");
-
-                if(dir.mkdirs())
-                {
-                    //copy sample files into new folders
-                    var resourceFolder = new File(App.class.getResource(dirName).getFile());
-                    var files = resourceFolder.listFiles();
-                    for(var file : files)
-                    {
-                        var originalPath = file.toPath();
-                        var newPath = Paths.get(ROOT_DIR + dirName + File.separator + file.getName());
-                        System.out.println("Copying file \"" + originalPath.toString() + "\" to \"" + newPath + "\"");
-                        Files.copy(originalPath, newPath);
-                    }
-                }
-                else
-                {
-                    throw new IOException("Directory creation failed");
-                }
-            }
-
-            // make sure it's a directory
-            if(!dir.isDirectory())
-            {
-                throw new IOException(ROOT_DIR + " is not a directory");
-            }
-        }
+//        var dirNames = new String[]{
+//              CHARACTERS_DIR,
+//              AUDIO_DIR
+//        };
+//
+//        for(var dirName : dirNames)
+//        {
+//            var dir = new File(ROOT_DIR + dirName);
+//            // create if it doesn't exist yet
+//            if(!dir.exists())
+//            {
+//                System.out.println("Directory \"" + ROOT_DIR + dirName + "\" not found, creating new one");
+//
+//                if(dir.mkdirs())
+//                {
+////                    Reflections refl = new Reflections("com.tmgmusic");
+//
+//                    //copy sample files into new folders
+//                    var resourceFolder = new File(App.class.getResource(dirName).getFile());
+//                    var files = resourceFolder.listFiles();
+//                    for(var file : files)
+//                    {
+//                        var originalPath = file.toPath();
+//                        var newPath = Paths.get(ROOT_DIR + dirName + File.separator + file.getName());
+//                        System.out.println("Copying file \"" + originalPath.toString() + "\" to \"" + newPath + "\"");
+//                        Files.copy(originalPath, newPath);
+//                    }
+//                }
+//                else
+//                {
+//                    throw new IOException("Directory creation failed");
+//                }
+//            }
+//
+//            // make sure it's a directory
+//            if(!dir.isDirectory())
+//            {
+//                throw new IOException(ROOT_DIR + " is not a directory");
+//            }
+//        }
     }
 
     @Override
