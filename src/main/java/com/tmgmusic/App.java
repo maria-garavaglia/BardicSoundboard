@@ -17,8 +17,8 @@ import java.nio.file.Paths;
 public class App extends Application {
 
     private static final String ROOT_DIR = System.getProperty("user.home") + File.separator + "Bardic Soundboard";
-    private static final String CHARACTERS_DIR = File.separator + "Characters";
-    private static final String AUDIO_DIR = File.separator + "Audio";
+    private static final String CHARACTERS_DIR = "/Characters";
+    private static final String AUDIO_DIR = "/Audio";
 
     public static final String CHARACTERS_DIR_FULL = ROOT_DIR + CHARACTERS_DIR;
     public static final String AUDIO_DIR_FULL = ROOT_DIR + AUDIO_DIR;
@@ -51,7 +51,8 @@ public class App extends Application {
                 if(dir.mkdirs())
                 {
                     //copy sample files into new folders
-                    var files = new File("." + dirName).listFiles();
+                    var resourceFolder = new File(App.class.getResource(dirName).getFile());
+                    var files = resourceFolder.listFiles();
                     for(var file : files)
                     {
                         var originalPath = file.toPath();
