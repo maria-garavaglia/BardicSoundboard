@@ -11,6 +11,12 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.github.cliftonlabs</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+        <!--java FX-->
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>15.0.1</version>
@@ -25,11 +31,7 @@
             <artifactId>javafx-media</artifactId>
             <version>15.0.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.cliftonlabs</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>3.1.1</version>
-        </dependency>
+        <!--/java FX-->
     </dependencies>
     <build>
         <plugins>
