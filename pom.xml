@@ -22,9 +22,9 @@
 
         <!-- Reflection library (not modular) -->
         <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.9.12</version>
+            <groupId>io.github.classgraph</groupId>
+            <artifactId>classgraph</artifactId>
+            <version>4.8.102</version>
         </dependency>
 
         <!-- javaFX (all modular) -->
@@ -56,6 +56,15 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>15</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.5</version>
+                <configuration>
+                    <mainClass>com.tmgmusic.App</mainClass>
+                    <launcher>BardicSoundboard</launcher>
                 </configuration>
             </plugin>
 
@@ -112,23 +121,23 @@
                                 </module>
 
                                 <!-- reflections -->
-                                <module>
-                                    <artifact>
-                                        <groupId>org.reflections</groupId>
-                                        <artifactId>reflections</artifactId>
-                                        <version>0.9.12</version>
-                                    </artifact>
-                                    <moduleInfoSource>
-                                        module reflections {
-                                            exports org.reflections;
-                                            exports org.reflections.adapters;
-                                            exports org.reflections.scanners;
-                                            exports org.reflections.serializers;
-                                            exports org.reflections.util;
-                                            exports org.reflections.vfs;
-                                        }
-                                    </moduleInfoSource>
-                                </module>
+<!--                                <module>-->
+<!--                                    <artifact>-->
+<!--                                        <groupId>org.reflections</groupId>-->
+<!--                                        <artifactId>reflections</artifactId>-->
+<!--                                        <version>0.9.12</version>-->
+<!--                                    </artifact>-->
+<!--                                    <moduleInfoSource>-->
+<!--                                        module reflections {-->
+<!--                                            exports org.reflections;-->
+<!--                                            exports org.reflections.adapters;-->
+<!--                                            exports org.reflections.scanners;-->
+<!--                                            exports org.reflections.serializers;-->
+<!--                                            exports org.reflections.util;-->
+<!--                                            exports org.reflections.vfs;-->
+<!--                                        }-->
+<!--                                    </moduleInfoSource>-->
+<!--                                </module>-->
                             </modules>
 
                             <!-- My project module, apparently this needs to be defined here too even though module-info already exists -->
@@ -157,7 +166,7 @@
                                 <module>javafx.fxml</module>
                                 <module>javafx.media</module>
                                 <module>json.simple</module>
-                                <module>reflections</module>
+                                <module>io.github.classgraph</module>
                             </modules>
                             <launcher>
                                 <name>BardicSoundboard</name>
