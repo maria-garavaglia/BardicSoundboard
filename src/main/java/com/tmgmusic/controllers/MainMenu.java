@@ -31,10 +31,9 @@ public class MainMenu extends MenuBar
       loader.setRoot(this);
       loader.setControllerFactory(theClass -> this);
 
-      String fileName = this.getClass().getSimpleName() + ".fxml";
       try
       {
-         loader.load(this.getClass().getResourceAsStream(fileName));
+         loader.load(this.getClass().getResourceAsStream("/controllers/MainMenu.fxml"));
       }
       catch(IOException e)
       {

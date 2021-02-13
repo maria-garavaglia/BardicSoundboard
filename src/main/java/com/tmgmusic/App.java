@@ -51,7 +51,6 @@ public class App extends Application {
                 if(dir.mkdirs())
                 {
                     //copy sample files into new folders
-                    System.out.println("Working Directory: " + new File(".").getCanonicalPath());
                     var files = new File("." + dirName).listFiles();
                     for(var file : files)
                     {
@@ -77,7 +76,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("controllers/MainWindow"), 640, 480);
+        scene = new Scene(loadFXML("/controllers/MainWindow"), 640, 480);
         stage.setScene(scene);
         stage.show();
     }
