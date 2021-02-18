@@ -5,7 +5,6 @@ import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
 import com.tmgmusic.App;
 import com.tmgmusic.data.Character;
-import com.tmgmusic.data.Spell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuBar;
@@ -14,16 +13,14 @@ import javafx.stage.FileChooser;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 public class MainMenu extends MenuBar
 {
    private Character loadedCharacter = null;
    private FileChooser fileChooser;
-   private PropertyChangeSupport support;
+   private final PropertyChangeSupport support;
 
    public MainMenu()
    {
@@ -47,10 +44,10 @@ public class MainMenu extends MenuBar
       support.addPropertyChangeListener(pcl);
    }
 
-   public void removeChangeListener(PropertyChangeListener pcl)
-   {
-      support.removePropertyChangeListener(pcl);
-   }
+//   public void removeChangeListener(PropertyChangeListener pcl)
+//   {
+//      support.removePropertyChangeListener(pcl);
+//   }
 
    public void initialize()
    {

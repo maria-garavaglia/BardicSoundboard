@@ -3,18 +3,16 @@ package com.tmgmusic.data;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.tmgmusic.json.SpellKeys;
 
-import java.io.File;
-
 public class Spell
 {
-   private String name;
-   private String audio;
+   private final String name;
+   private final String audio;
 
-   public Spell(String name, String audioFilename)
-   {
-      this.name = name;
-      this.audio = "";
-   }
+//   public Spell(String name, String audioFilename)
+//   {
+//      this.name = name;
+//      this.audio = "";
+//   }
 
    public Spell(JsonObject json)
    {
