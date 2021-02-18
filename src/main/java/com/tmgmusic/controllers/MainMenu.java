@@ -3,6 +3,7 @@ package com.tmgmusic.controllers;
 import com.github.cliftonlabs.json_simple.JsonException;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
+import com.tmgmusic.App;
 import com.tmgmusic.data.Character;
 import com.tmgmusic.data.Spell;
 import javafx.fxml.FXML;
@@ -51,12 +52,12 @@ public class MainMenu extends MenuBar
       support.removePropertyChangeListener(pcl);
    }
 
-   public void initialize() throws MalformedURLException
+   public void initialize()
    {
       // Set the FileChooser configuration
       fileChooser = new FileChooser();
       fileChooser.setTitle("Load Character");
-      fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+      fileChooser.setInitialDirectory(new File(App.ROOT_DIR + File.separator + App.CHARACTERS_DIR));
       fileChooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("JSON", "*.json")
       );
@@ -75,7 +76,7 @@ public class MainMenu extends MenuBar
    private void loadJson(File jsonFile)
    {
 
-      try(var reader = new FileReader(jsonFile); )
+      try(var reader = new FileReader(jsonFile))
       {
          JsonObject json = (JsonObject)Jsoner.deserialize(reader);
          var newCharacter = new Character(json);
