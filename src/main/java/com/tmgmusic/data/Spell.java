@@ -8,19 +8,18 @@ import java.io.File;
 public class Spell
 {
    private String name;
-   private File audio;
+   private String audio;
 
    public Spell(String name, String audioFilename)
    {
       this.name = name;
-      audio = new File(audioFilename);
+      this.audio = "";
    }
 
    public Spell(JsonObject json)
    {
       name = json.getString(SpellKeys.KEY_NAME);
-      String filename = json.getString(SpellKeys.KEY_FILE);
-      audio = new File(filename);
+      audio = json.getString(SpellKeys.KEY_FILE);
    }
 
    public String getName()
@@ -28,7 +27,7 @@ public class Spell
       return name;
    }
 
-   public File getAudio()
+   public String getAudio()
    {
       return audio;
    }

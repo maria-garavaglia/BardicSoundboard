@@ -16,88 +16,81 @@ import java.nio.file.Paths;
 /**
  * JavaFX App
  */
-public class App extends Application {
+public class App extends Application
+{
 
-    private static final String ROOT_DIR = System.getProperty("user.home") + File.separator + "Bardic Soundboard";
-    private static final String CHARACTERS_DIR = "/Characters";
-    private static final String AUDIO_DIR = "/Audio";
+   public static final String ROOT_DIR = System.getProperty("user.home") + File.separator + "Bardic_Soundboard";
+   public static final String CHARACTERS_DIR = "/Characters";
+   public static final String AUDIO_DIR = "/Audio";
 
-    public static final String CHARACTERS_DIR_FULL = ROOT_DIR + CHARACTERS_DIR;
-    public static final String AUDIO_DIR_FULL = ROOT_DIR + AUDIO_DIR;
+   public static void main(String[] args) throws IOException
+   {
+      findOrCreateHomeDirs();
 
-    private static Scene scene;
+      //Launch FX
+      launch();
+   }
 
-    public static void main(String[] args) throws IOException
-    {
-        findOrCreateHomeDirs();
+   private static void findOrCreateHomeDirs() throws IOException
+   {
+      var dirNames = new String[]{
+            CHARACTERS_DIR,
+            AUDIO_DIR
+      };
 
-        //Launch FX
-        launch();
-    }
+      for(var dirName : dirNames)
+      {
+         var dir = new File(ROOT_DIR + dirName);
+         // create if it doesn't exist yet
+         if(!dir.exists())
+         {
+            System.out.println("Directory \"" + ROOT_DIR + dirName + "\" not found, creating new one");
 
-    private static void findOrCreateHomeDirs() throws IOException
-    {
-        var dirNames = new String[]{
-              CHARACTERS_DIR,
-              AUDIO_DIR
-        };
-
-        for(var dirName : dirNames)
-        {
-            var dir = new File(ROOT_DIR + dirName);
-            // create if it doesn't exist yet
-            if(!dir.exists())
+            if(dir.mkdirs())
             {
-                System.out.println("Directory \"" + ROOT_DIR + dirName + "\" not found, creating new one");
+               //Get all resource files in the given directory
+               //Trying to get the whole folder as a single resource just returns null, so we have to use reflection instead
+               ScanResult scan = new ClassGraph()
+                     .acceptPaths(dirName)
+                     .scan();
+               var files = scan.getAllResources().nonClassFilesOnly();
+               System.out.println("Found " + files.size() + " items");
 
-                if(dir.mkdirs())
-                {
-                    ScanResult scan = new ClassGraph()
-                          .acceptPaths("Audio")
-                          .scan();
-                    var test = scan.getAllResources().nonClassFilesOnly();
-                    System.out.println("Found " + test.size() + " items");
-                    for(var item : test)
-                    {
-                        System.out.println(item.toString());
-                    }
+               for(var file : files)
+               {
+                  //get path name, removing the classpath tacked on the front
+                  var classpath = file.getClasspathElementURI().getPath();
+                  var filePath = file.getURI().getPath().replaceAll(classpath, "");
 
-                    //copy sample files into new folders
-                    var resourceFolder = new File(App.class.getResource(dirName).getFile());
-                    var files = resourceFolder.listFiles();
-                    for(var file : files)
-                    {
-                        var originalPath = file.toPath();
-                        var newPath = Paths.get(ROOT_DIR + dirName + File.separator + file.getName());
-                        System.out.println("Copying file \"" + originalPath.toString() + "\" to \"" + newPath + "\"");
-                        Files.copy(originalPath, newPath);
-                    }
-                }
-                else
-                {
-                    throw new IOException("Directory creation failed");
-                }
+                  //make a new path ROOT_DIR/dirName/filename.xyz to copy the file to
+                  var filename = Paths.get(filePath).getFileName().toString();
+                  var newPath = Paths.get(ROOT_DIR + dirName + File.separator + filename);
+
+                  //Copy the file
+                  System.out.println("Copying file \"" + filePath + "\" to \"" + newPath + "\"");
+                  Files.copy(App.class.getResourceAsStream(filePath), newPath);
+               }
             }
-
-            // make sure it's a directory
-            if(!dir.isDirectory())
+            else
             {
-                throw new IOException(ROOT_DIR + " is not a directory");
+               throw new IOException("Directory creation failed");
             }
-        }
-    }
+         }
 
-    @Override
-    public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("/controllers/MainWindow"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
-    }
+         // make sure it's a directory
+         if(!dir.isDirectory())
+         {
+            throw new IOException(ROOT_DIR + " is not a directory");
+         }
+      }
+   }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
-
+   @Override
+   public void start(Stage stage) throws IOException
+   {
+      FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/controllers/MainWindow.fxml"));
+      Scene scene = new Scene(fxmlLoader.load(), 640, 480);
+      stage.setScene(scene);
+      stage.show();
+   }
 }

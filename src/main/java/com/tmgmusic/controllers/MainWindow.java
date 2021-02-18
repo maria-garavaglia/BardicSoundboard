@@ -1,5 +1,6 @@
 package com.tmgmusic.controllers;
 
+import com.tmgmusic.App;
 import com.tmgmusic.data.Character;
 import com.tmgmusic.data.Spell;
 
@@ -13,6 +14,7 @@ import javafx.scene.media.MediaPlayer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 
 public class MainWindow implements PropertyChangeListener
 {
@@ -51,8 +53,9 @@ public class MainWindow implements PropertyChangeListener
    private void play()
    {
       Spell song = songListView.getSelectionModel().getSelectedItem();
-      System.out.println("Playing audio: " + song.getAudio().toURI().toString());
-      Media media = new Media(song.getAudio().toURI().toString());
+      String filePath = new File(App.ROOT_DIR + File.separator + song.getAudio()).toURI().toString();
+      System.out.println("Playing audio: " + filePath);
+      Media media = new Media(filePath);
 
       if(player != null && player.getStatus() == MediaPlayer.Status.PLAYING)
       {
