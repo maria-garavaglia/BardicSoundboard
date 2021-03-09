@@ -1,10 +1,6 @@
 package com.tmgmusic.data;
 
-import com.github.cliftonlabs.json_simple.JsonException;
-import com.github.cliftonlabs.json_simple.JsonObject;
-import com.github.cliftonlabs.json_simple.Jsonable;
-import com.github.cliftonlabs.json_simple.Jsoner;
-import com.tmgmusic.json.SpellKeys;
+import com.github.cliftonlabs.json_simple.*;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -65,4 +61,36 @@ public class Spell implements Jsonable
 
       json.toJson(writable);
    }
+
+   enum SpellKeys implements JsonKey
+   {
+      KEY_NAME("name"),
+      KEY_FILE("file");
+
+      private final Object value;
+
+      /**
+       * Instantiates a JsonKey with the provided value.
+       *
+       * @param value represents a valid default for the key.
+       */
+      SpellKeys(final Object value)
+      {
+         this.value = value;
+      }
+
+      @Override
+      public String getKey()
+      {
+         return this.value.toString();
+      }
+
+      @Override
+      public Object getValue()
+      {
+         return this.value;
+      }
+   }
 }
+
+

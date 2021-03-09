@@ -1,16 +1,11 @@
 package com.tmgmusic.data;
 
-import com.github.cliftonlabs.json_simple.JsonArray;
-import com.github.cliftonlabs.json_simple.JsonObject;
-import com.github.cliftonlabs.json_simple.Jsonable;
-import com.github.cliftonlabs.json_simple.Jsoner;
-import com.tmgmusic.json.CharacterKeys;
+import com.github.cliftonlabs.json_simple.*;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Character implements Jsonable
 {
@@ -83,4 +78,35 @@ public class Character implements Jsonable
       json.toJson(writable);
    }
 
+   enum CharacterKeys implements JsonKey
+   {
+      KEY_CHARNAME("charName"),
+      KEY_SPELLS("spells");
+
+      private final Object value;
+
+      /**
+       * Instantiates a JsonKey with the provided value.
+       *
+       * @param value represents a valid default for the key.
+       */
+      CharacterKeys(final Object value)
+      {
+         this.value = value;
+      }
+
+      @Override
+      public String getKey()
+      {
+         return this.value.toString();
+      }
+
+      @Override
+      public Object getValue()
+      {
+         return this.value;
+      }
+   }
 }
+
+
