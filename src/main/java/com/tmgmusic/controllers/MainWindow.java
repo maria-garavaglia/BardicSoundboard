@@ -12,6 +12,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
@@ -19,6 +22,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,14 +37,10 @@ public class MainWindow
    private ObservableList<Spell> songs;
    private MediaPlayer player;
 
-   @FXML
-   private VBox mainVBox;
-   @FXML
-   private ListView<Spell> songListView;
-   @FXML
-   private Label currentSong;
-   @FXML
-   private Slider volumeSlider;
+   @FXML private VBox mainVBox;
+   @FXML private ListView<Spell> songListView;
+   @FXML private Label currentSong;
+   @FXML private Slider volumeSlider;
 
    /****************************************************************************
     * Init
@@ -82,8 +83,24 @@ public class MainWindow
    }
 
    @FXML
-   private void editSpell()
+   private void editSpell() throws IOException
    {
+      Spell spell = songListView.getSelectionModel().getSelectedItem();
+      if(spell != null)
+      {
+         var fxmlLoader = new FXMLLoader(getClass().getResource("EditSpellDialog.fxml"));
+         Parent parent = fxmlLoader.load();
+         var controller = fxmlLoader.<EditSpellDialog>getController();
+
+         controller.setCharacter(loadedCharacter);
+         controller.setSpell(spell);
+
+         var scene = new Scene(parent);
+         var stage = new Stage();
+         stage.initModality(Modality.APPLICATION_MODAL);
+         stage.setScene(scene);
+         stage.showAndWait();
+      }
 
    }
 

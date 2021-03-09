@@ -7,8 +7,8 @@ import java.io.Writer;
 
 public class Spell implements Jsonable
 {
-   private final String name;
-   private final String audio;
+   private String name;
+   private String audio;
 
 //   public Spell(String name, String audioFilename)
 //   {
@@ -27,9 +27,19 @@ public class Spell implements Jsonable
       return name;
    }
 
+   public void setName(String name)
+   {
+      this.name = name;
+   }
+
    public String getAudio()
    {
       return audio;
+   }
+
+   public void setAudio(String filename)
+   {
+      this.audio = filename;
    }
 
    @Override
