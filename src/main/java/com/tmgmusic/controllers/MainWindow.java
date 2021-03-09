@@ -7,20 +7,21 @@ import com.tmgmusic.App;
 import com.tmgmusic.data.Character;
 import com.tmgmusic.data.Spell;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.nio.file.Files;
 
 public class MainWindow
@@ -33,15 +34,22 @@ public class MainWindow
 
    @FXML
    private VBox mainVBox;
-
    @FXML
    private ListView<Spell> songListView;
-
    @FXML
    private Label currentSong;
+   @FXML
+   private Slider volumeSlider;
+
+   /****************************************************************************
+    * Init
+    */
 
    public void initialize()
    {
+      // Add listener for volume slider (not sure how to add it in fxml)
+      volumeSlider.valueProperty().addListener(this::setVolume);
+
       // Set the FileChooser configuration
       fileChooser = new FileChooser();
       fileChooser.setInitialDirectory(new File(App.ROOT_DIR + File.separator + App.CHARACTERS_DIR));
@@ -63,6 +71,10 @@ public class MainWindow
       });
    }
 
+   /****************************************************************************
+    * Audio playback
+    */
+
    @FXML
    private void play()
    {
@@ -82,19 +94,31 @@ public class MainWindow
          throw player.getError();
       });
 
-      player.setVolume(0.2);
+      player.setVolume(volumeSlider.getValue());
       player.play();
       currentSong.setText(song.getName());
    }
 
    @FXML
-   public void stop()
+   private void stop()
    {
       if(player != null && player.getStatus() == MediaPlayer.Status.PLAYING)
       {
          player.stop();
       }
    }
+
+   private void setVolume(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
+   {
+      if(player != null)
+      {
+         player.setVolume(newValue.doubleValue());
+      }
+   }
+
+   /****************************************************************************
+    * File menu
+    */
 
    @FXML
    private void open()
@@ -142,4 +166,5 @@ public class MainWindow
          e.printStackTrace();
       }
    }
+
 }
