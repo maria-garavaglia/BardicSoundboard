@@ -1,11 +1,8 @@
 package com.tmgmusic;
 
-import com.tmgmusic.data.Character;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
@@ -89,7 +86,7 @@ public class App extends Application
    @Override
    public void start(Stage stage) throws IOException
    {
-      FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/controllers/MainWindow.fxml"));
+      FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("controllers/MainWindow.fxml"));
       Scene scene = new Scene(fxmlLoader.load(), 640, 480);
       stage.setScene(scene);
       stage.show();
