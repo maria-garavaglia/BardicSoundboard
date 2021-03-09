@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.file.Files;
 
 public class MainWindow
 {
@@ -96,22 +97,13 @@ public class MainWindow
    }
 
    @FXML
-   private void openFile()
+   private void open()
    {
       fileChooser.setTitle("Load Character");
       var file = fileChooser.showOpenDialog(mainVBox.getScene().getWindow());
       if(file != null)
       {
-         try(var reader = new FileReader(file))
-         {
-            JsonObject json = (JsonObject)Jsoner.deserialize(reader);
-            loadedCharacter = new Character(json);
-
-         }
-         catch(IOException | JsonException e)
-         {
-            e.printStackTrace();
-         }
+         loadedCharacter = new Character(file);
 
          songs.clear();
          songs.addAll(loadedCharacter.getSpells());
@@ -119,19 +111,35 @@ public class MainWindow
    }
 
    @FXML
-   private void saveFile() throws IOException
+   private void save()
    {
-      var writer = new StringWriter();
-      String jsonString = loadedCharacter.toJson();
-      System.out.println(jsonString);
+      var file = new File(loadedCharacter.getSaveFile());
+      if(!file.exists())
+      {
+         saveAs();
+      }
+
+      saveFile(file);
    }
 
    @FXML
-   private void saveFileAs()
+   private void saveAs()
    {
       fileChooser.setTitle("Save Character");
       var file = fileChooser.showSaveDialog(mainVBox.getScene().getWindow());
-      //String json = loadedCharacter.toJson();
+      saveFile(file);
+   }
 
+   private void saveFile(File file)
+   {
+      String newJson = loadedCharacter.toJson();
+      try
+      {
+         Files.writeString(file.toPath(), newJson);
+      }
+      catch(IOException e)
+      {
+         e.printStackTrace();
+      }
    }
 }

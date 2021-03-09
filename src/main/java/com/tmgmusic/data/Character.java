@@ -2,6 +2,8 @@ package com.tmgmusic.data;
 
 import com.github.cliftonlabs.json_simple.*;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -18,15 +20,31 @@ public class Character implements Jsonable
       name = "New Character";
    }
 
-   public Character(JsonObject json)
+   public Character(File savedFile)
    {
-      name = json.getString(CharacterKeys.KEY_CHARNAME);
-      JsonArray spellsJson = json.getCollection(CharacterKeys.KEY_SPELLS);
-      for(int index = 0; index < spellsJson.size(); index++)
+      saveFilename = savedFile.getPath();
+      try(var reader = new FileReader(savedFile))
       {
-         var newSpell = new Spell(spellsJson.getMap(index));
-         spells.add(newSpell);
+         JsonObject json = (JsonObject)Jsoner.deserialize(reader);
+
+         name = json.getString(CharacterKeys.KEY_CHARNAME);
+         JsonArray spellsJson = json.getCollection(CharacterKeys.KEY_SPELLS);
+         for(int index = 0; index < spellsJson.size(); index++)
+         {
+            var newSpell = new Spell(spellsJson.getMap(index));
+            spells.add(newSpell);
+         }
       }
+      catch(IOException | JsonException e)
+      {
+         e.printStackTrace();
+      }
+
+   }
+
+   public String getSaveFile()
+   {
+      return saveFilename;
    }
 
    public String getName()
@@ -38,21 +56,6 @@ public class Character implements Jsonable
    {
       return spells;
    }
-
-//   public Spell getSpell(String spellName)
-//   {
-//      var spell = spells.get(spellName);
-//      if(spell == null)
-//      {
-//         System.err.println("Error: Spell '" + spellName + "' not found in " + name + "'s spell list");
-//      }
-//      return spell;
-//   }
-
-//   public void addSpell(Spell spell)
-//   {
-//      spells.put(spell.getName(), spell);
-//   }
 
    private JsonObject getJsonObject()
    {
