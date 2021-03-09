@@ -1,5 +1,8 @@
 package com.tmgmusic.controllers;
 
+import com.github.cliftonlabs.json_simple.JsonException;
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsoner;
 import com.tmgmusic.App;
 import com.tmgmusic.data.Character;
 import com.tmgmusic.data.Spell;
@@ -9,21 +12,27 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.FileChooser;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
-public class MainWindow implements PropertyChangeListener
+public class MainWindow
 {
+   private Character loadedCharacter;
 
+   private FileChooser fileChooser;
    private ObservableList<Spell> songs;
    private MediaPlayer player;
 
    @FXML
-   private MainMenu menu;
+   private VBox mainVBox;
 
    @FXML
    private ListView<Spell> songListView;
@@ -33,6 +42,13 @@ public class MainWindow implements PropertyChangeListener
 
    public void initialize()
    {
+      // Set the FileChooser configuration
+      fileChooser = new FileChooser();
+      fileChooser.setInitialDirectory(new File(App.ROOT_DIR + File.separator + App.CHARACTERS_DIR));
+      fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("JSON", "*.json")
+      );
+
       // Initialize the list
       songs = FXCollections.observableArrayList();
 
@@ -45,8 +61,6 @@ public class MainWindow implements PropertyChangeListener
             play();
          }
       });
-
-      menu.addChangeListener(this);
    }
 
    @FXML
@@ -82,15 +96,39 @@ public class MainWindow implements PropertyChangeListener
       }
    }
 
-   @Override
-   public void propertyChange(PropertyChangeEvent evt)
+   @FXML
+   private void openFile()
    {
-      this.loadCharacter((Character)evt.getNewValue());
+      fileChooser.setTitle("Load Character");
+      var file = fileChooser.showOpenDialog(mainVBox.getScene().getWindow());
+      if(file != null)
+      {
+         try(var reader = new FileReader(file))
+         {
+            JsonObject json = (JsonObject)Jsoner.deserialize(reader);
+            loadedCharacter = new Character(json);
+
+         }
+         catch(IOException | JsonException e)
+         {
+            e.printStackTrace();
+         }
+
+         songs.clear();
+         songs.addAll(loadedCharacter.getSpells().values());
+      }
    }
 
-   private void loadCharacter(Character newCharacter)
+   @FXML
+   private void saveFileAs()
    {
-      songs.clear();
-      songs.addAll(newCharacter.getSpells().values());
+      fileChooser.setTitle("Save Character");
+      var file = fileChooser.showSaveDialog(mainVBox.getScene().getWindow());
+      //String json =
+
+   }
+
+   public void loadCharacter()
+   {
    }
 }

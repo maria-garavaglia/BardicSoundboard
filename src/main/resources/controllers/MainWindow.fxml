@@ -7,10 +7,30 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Label?>
-<?import com.tmgmusic.controllers.MainMenu?>
-<VBox fx:controller="com.tmgmusic.controllers.MainWindow"
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<VBox fx:id="mainVBox" fx:controller="com.tmgmusic.controllers.MainWindow"
       xmlns:fx="http://javafx.com/fxml">
-    <MainMenu fx:id="menu"/>
+    <MenuBar>
+        <menus>
+            <Menu text="File">
+                <items>
+                    <!--                <MenuItem text="New"/>-->
+                    <MenuItem text="Open" onAction="#openFile"/>
+                    <!--                <MenuItem text="Save" onAction="#saveFile"/>-->
+                    <MenuItem text="Save As..."/>
+                    <!--                <SeparatorMenuItem  />-->
+                    <!--                <MenuItem text="Exit"/>-->
+                </items>
+            </Menu>
+            <Menu text="Help">
+                <items>
+                    <MenuItem text="About" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
     <VBox>
         <padding>
             <Insets top="15" right="15" bottom="15" left="15" />

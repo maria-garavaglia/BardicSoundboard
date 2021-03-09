@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class Character
 {
-//   private final String name;
+   private final String name;
    private final Map<String, Spell> spells = new HashMap<>();
 
-//   public Character()
-//   {
-//      name = "John Doe";
-//   }
+   public Character()
+   {
+      name = "New Character";
+   }
 
 //   public Character(String name)
 //   {
@@ -24,7 +24,7 @@ public class Character
 
    public Character(JsonObject json)
    {
-//      name = json.getString(CharacterKeys.KEY_CHARNAME);
+      name = json.getString(CharacterKeys.KEY_CHARNAME);
       JsonArray spellsJson = json.getCollection(CharacterKeys.KEY_SPELLS);
       for(int index = 0; index < spellsJson.size(); index++)
       {
@@ -33,10 +33,10 @@ public class Character
       }
    }
 
-//   public String getName()
-//   {
-//      return name;
-//   }
+   public String getName()
+   {
+      return name;
+   }
 
    public Map<String, Spell> getSpells()
    {

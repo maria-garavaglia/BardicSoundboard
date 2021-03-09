@@ -1,8 +1,11 @@
 package com.tmgmusic;
 
+import com.tmgmusic.data.Character;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
@@ -17,7 +20,6 @@ import java.nio.file.Paths;
  */
 public class App extends Application
 {
-
    public static final String ROOT_DIR = System.getProperty("user.home") + File.separator + "Bardic_Soundboard";
    public static final String CHARACTERS_DIR = "/Characters";
    public static final String AUDIO_DIR = "/Audio";
