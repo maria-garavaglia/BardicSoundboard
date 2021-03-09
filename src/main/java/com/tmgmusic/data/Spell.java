@@ -1,9 +1,15 @@
 package com.tmgmusic.data;
 
+import com.github.cliftonlabs.json_simple.JsonException;
 import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsonable;
+import com.github.cliftonlabs.json_simple.Jsoner;
 import com.tmgmusic.json.SpellKeys;
 
-public class Spell
+import java.io.IOException;
+import java.io.Writer;
+
+public class Spell implements Jsonable
 {
    private final String name;
    private final String audio;
@@ -34,5 +40,29 @@ public class Spell
    public String toString()
    {
       return this.name;
+   }
+
+   private JsonObject getJsonObject()
+   {
+      final JsonObject json = new JsonObject();
+      json.put("name", name);
+      json.put("file", audio);
+      return json;
+   }
+
+   @Override
+   public String toJson()
+   {
+      final JsonObject json = getJsonObject();
+
+      return json.toJson();
+   }
+
+   @Override
+   public void toJson(Writer writable) throws IOException
+   {
+      final JsonObject json = getJsonObject();
+
+      json.toJson(writable);
    }
 }

@@ -13,23 +13,17 @@
 <VBox fx:id="mainVBox" fx:controller="com.tmgmusic.controllers.MainWindow"
       xmlns:fx="http://javafx.com/fxml">
     <MenuBar>
-        <menus>
-            <Menu text="File">
-                <items>
-                    <!--                <MenuItem text="New"/>-->
-                    <MenuItem text="Open" onAction="#openFile"/>
-                    <!--                <MenuItem text="Save" onAction="#saveFile"/>-->
-                    <MenuItem text="Save As..."/>
-                    <!--                <SeparatorMenuItem  />-->
-                    <!--                <MenuItem text="Exit"/>-->
-                </items>
-            </Menu>
-            <Menu text="Help">
-                <items>
-                    <MenuItem text="About" />
-                </items>
-            </Menu>
-        </menus>
+        <Menu text="File">
+            <!--                <MenuItem text="New"/>-->
+            <MenuItem text="Open" onAction="#openFile"/>
+            <MenuItem text="Save" onAction="#saveFile"/>
+            <MenuItem text="Save As..."/>
+            <!--                <SeparatorMenuItem  />-->
+            <!--                <MenuItem text="Exit"/>-->
+        </Menu>
+        <Menu text="Help">
+            <MenuItem text="About"/>
+        </Menu>
     </MenuBar>
     <VBox>
         <padding>

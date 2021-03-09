@@ -22,6 +22,7 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringWriter;
 
 public class MainWindow
 {
@@ -115,8 +116,16 @@ public class MainWindow
          }
 
          songs.clear();
-         songs.addAll(loadedCharacter.getSpells().values());
+         songs.addAll(loadedCharacter.getSpells());
       }
+   }
+
+   @FXML
+   private void saveFile() throws IOException
+   {
+      var writer = new StringWriter();
+      String jsonString = loadedCharacter.toJson();
+      System.out.println(jsonString);
    }
 
    @FXML
@@ -124,11 +133,7 @@ public class MainWindow
    {
       fileChooser.setTitle("Save Character");
       var file = fileChooser.showSaveDialog(mainVBox.getScene().getWindow());
-      //String json =
+      //String json = loadedCharacter.toJson();
 
-   }
-
-   public void loadCharacter()
-   {
    }
 }
