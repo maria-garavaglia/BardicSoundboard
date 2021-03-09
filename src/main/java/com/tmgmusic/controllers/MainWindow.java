@@ -72,6 +72,28 @@ public class MainWindow
    }
 
    /****************************************************************************
+    * Spell List Operations
+    */
+
+   @FXML
+   private void addSpell()
+   {
+
+   }
+
+   @FXML
+   private void editSpell()
+   {
+
+   }
+
+   @FXML
+   private void removeSpell()
+   {
+
+   }
+
+   /****************************************************************************
     * Audio playback
     */
 
