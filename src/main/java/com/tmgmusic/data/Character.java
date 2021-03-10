@@ -62,6 +62,18 @@ public class Character implements Jsonable
         spells.add(newSpell);
     }
 
+    public void removeSpell(Spell toRemove)
+    {
+        for(var spell : spells)
+        {
+            if(spell.equals(toRemove))
+            {
+                spells.remove(spell);
+                break;
+            }
+        }
+    }
+
     /****************************************************************************
      * To/from JSON
      */

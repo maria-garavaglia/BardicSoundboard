@@ -10,9 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -119,7 +117,22 @@ public class MainWindow
     @FXML
     private void removeSpell()
     {
+        if(songListView.getSelectionModel().getSelectedItem() == null)
+        {
+            return;
+        }
 
+        Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmDialog.setHeaderText(null);
+        confirmDialog.setContentText("Are you sure you want to delete this spell?");
+        confirmDialog.showAndWait();
+
+        if(confirmDialog.getResult() == ButtonType.OK)
+        {
+            Spell toDelete = songListView.getSelectionModel().getSelectedItem();
+            loadedCharacter.removeSpell(toDelete);
+            songs.remove(toDelete);
+        }
     }
 
     /****************************************************************************

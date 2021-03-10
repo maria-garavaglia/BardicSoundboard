@@ -24,6 +24,12 @@ public class Spell implements Jsonable
         audio = json.getString(SpellKeys.KEY_FILE);
     }
 
+    public boolean equals(Spell rhs)
+    {
+        return this.name.equals(rhs.name)
+            && this.audio.equals(rhs.audio);
+    }
+
     public String getName()
     {
         return name;
