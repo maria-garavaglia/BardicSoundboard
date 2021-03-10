@@ -118,7 +118,7 @@ public class MainWindow
    private void play()
    {
       Spell song = songListView.getSelectionModel().getSelectedItem();
-      String filePath = new File(App.ROOT_DIR + File.separator + song.getAudio()).toURI().toString();
+      String filePath = new File(song.getAudio()).toURI().toString();
       System.out.println("Playing audio: " + filePath);
       Media media = new Media(filePath);
 
