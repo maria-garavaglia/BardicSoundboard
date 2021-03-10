@@ -11,114 +11,114 @@ import java.util.List;
 
 public class Character implements Jsonable
 {
-   private String saveFilename;
-   private String name;
-   private List<Spell> spells = new ArrayList<>();
+    private String saveFilename;
+    private String name;
+    private final List<Spell> spells = new ArrayList<>();
 
-   public Character()
-   {
-      name = "New Character";
-   }
+    public Character()
+    {
+        name = "New Character";
+    }
 
-   public Character(File savedFile)
-   {
-      saveFilename = savedFile.getPath();
-      try(var reader = new FileReader(savedFile))
-      {
-         JsonObject json = (JsonObject)Jsoner.deserialize(reader);
+    public Character(File savedFile)
+    {
+        saveFilename = savedFile.getPath();
+        try(var reader = new FileReader(savedFile))
+        {
+            JsonObject json = (JsonObject)Jsoner.deserialize(reader);
 
-         name = json.getString(CharacterKeys.KEY_CHARNAME);
-         JsonArray spellsJson = json.getCollection(CharacterKeys.KEY_SPELLS);
-         for(int index = 0; index < spellsJson.size(); index++)
-         {
-            var newSpell = new Spell(spellsJson.getMap(index));
-            spells.add(newSpell);
-         }
-      }
-      catch(IOException | JsonException e)
-      {
-         e.printStackTrace();
-      }
+            name = json.getString(CharacterKeys.KEY_CHARNAME);
+            JsonArray spellsJson = json.getCollection(CharacterKeys.KEY_SPELLS);
+            for(int index = 0; index < spellsJson.size(); index++)
+            {
+                var newSpell = new Spell(spellsJson.getMap(index));
+                spells.add(newSpell);
+            }
+        }
+        catch(IOException | JsonException e)
+        {
+            e.printStackTrace();
+        }
 
-   }
+    }
 
-   public String getSaveFile()
-   {
-      return saveFilename;
-   }
+    public String getSaveFile()
+    {
+        return saveFilename;
+    }
 
-   public String getName()
-   {
-      return name;
-   }
+    public String getName()
+    {
+        return name;
+    }
 
-   public List<Spell> getSpells()
-   {
-      return spells;
-   }
+    public List<Spell> getSpells()
+    {
+        return spells;
+    }
 
-   public void addSpell(Spell newSpell)
-   {
-      spells.add(newSpell);
-   }
+    public void addSpell(Spell newSpell)
+    {
+        spells.add(newSpell);
+    }
 
-   /****************************************************************************
-    * To/from JSON
-    */
+    /****************************************************************************
+     * To/from JSON
+     */
 
-   private JsonObject getJsonObject()
-   {
-      final JsonObject json = new JsonObject();
-      json.put("charName", name);
-      json.put("spells", spells);
-      return json;
-   }
+    private JsonObject getJsonObject()
+    {
+        final JsonObject json = new JsonObject();
+        json.put("charName", name);
+        json.put("spells", spells);
+        return json;
+    }
 
-   @Override
-   public String toJson()
-   {
-      final JsonObject json = getJsonObject();
+    @Override
+    public String toJson()
+    {
+        final JsonObject json = getJsonObject();
 
-      return Jsoner.prettyPrint(json.toJson());
-   }
+        return Jsoner.prettyPrint(json.toJson());
+    }
 
-   @Override
-   public void toJson(Writer writable) throws IOException
-   {
-      final JsonObject json = getJsonObject();
+    @Override
+    public void toJson(Writer writable) throws IOException
+    {
+        final JsonObject json = getJsonObject();
 
-      json.toJson(writable);
-   }
+        json.toJson(writable);
+    }
 
-   enum CharacterKeys implements JsonKey
-   {
-      KEY_CHARNAME("charName"),
-      KEY_SPELLS("spells");
+    enum CharacterKeys implements JsonKey
+    {
+        KEY_CHARNAME("charName"),
+        KEY_SPELLS("spells");
 
-      private final Object value;
+        private final Object value;
 
-      /**
-       * Instantiates a JsonKey with the provided value.
-       *
-       * @param value represents a valid default for the key.
-       */
-      CharacterKeys(final Object value)
-      {
-         this.value = value;
-      }
+        /**
+         * Instantiates a JsonKey with the provided value.
+         *
+         * @param value represents a valid default for the key.
+         */
+        CharacterKeys(final Object value)
+        {
+            this.value = value;
+        }
 
-      @Override
-      public String getKey()
-      {
-         return this.value.toString();
-      }
+        @Override
+        public String getKey()
+        {
+            return this.value.toString();
+        }
 
-      @Override
-      public Object getValue()
-      {
-         return this.value;
-      }
-   }
+        @Override
+        public Object getValue()
+        {
+            return this.value;
+        }
+    }
 }
 
 

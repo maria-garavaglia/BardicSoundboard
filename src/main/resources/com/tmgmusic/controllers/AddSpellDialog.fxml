@@ -3,34 +3,34 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tmgmusic.controllers.AddSpellDialog">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.tmgmusic.controllers.AddSpellDialog">
     <VBox>
         <padding>
-            <Insets topRightBottomLeft="10" />
+            <Insets topRightBottomLeft="10"/>
         </padding>
         <HBox spacing="20">
             <padding>
-                <Insets topRightBottomLeft="5" />
+                <Insets topRightBottomLeft="5"/>
             </padding>
-            <Label text="Name" />
-            <TextField fx:id="spellNameField" prefHeight="25.0" prefWidth="231.0" />
+            <Label text="Name"/>
+            <TextField fx:id="spellNameField" prefHeight="25.0" prefWidth="231.0"/>
         </HBox>
         <HBox spacing="20">
             <padding>
-                <Insets topRightBottomLeft="5" />
+                <Insets topRightBottomLeft="5"/>
             </padding>
             <Label text="File">
                 <HBox.margin>
-                   <Insets right="14.0" />
+                    <Insets right="14.0"/>
                 </HBox.margin>
             </Label>
-            <TextField fx:id="filenameField" />
-            <Button text="Browse..." onAction="#browse" />
+            <TextField fx:id="filenameField"/>
+            <Button text="Browse..." onAction="#browse"/>
         </HBox>
         <HBox alignment="CENTER_RIGHT" spacing="10">
             <padding>
-                <Insets topRightBottomLeft="5" />
+                <Insets topRightBottomLeft="5"/>
             </padding>
             <Button text="OK" onAction="#okClicked"/>
             <Button text="Cancel" onAction="#closeWindow"/>

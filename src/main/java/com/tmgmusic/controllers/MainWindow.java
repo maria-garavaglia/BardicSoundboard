@@ -1,13 +1,8 @@
 package com.tmgmusic.controllers;
 
-import com.github.cliftonlabs.json_simple.JsonException;
-import com.github.cliftonlabs.json_simple.JsonObject;
-import com.github.cliftonlabs.json_simple.Jsoner;
 import com.tmgmusic.App;
 import com.tmgmusic.data.Character;
 import com.tmgmusic.data.Spell;
-
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,196 +26,196 @@ import java.nio.file.Files;
 
 public class MainWindow
 {
-   private Character loadedCharacter = new Character();
+    private Character loadedCharacter = new Character();
 
-   private FileChooser fileChooser;
-   private ObservableList<Spell> songs;
-   private MediaPlayer player;
+    private FileChooser fileChooser;
+    private ObservableList<Spell> songs;
+    private MediaPlayer player;
 
-   @FXML private VBox mainVBox;
-   @FXML private ListView<Spell> songListView;
-   @FXML private Label currentSong;
-   @FXML private Slider volumeSlider;
+    @FXML private VBox mainVBox;
+    @FXML private ListView<Spell> songListView;
+    @FXML private Label currentSong;
+    @FXML private Slider volumeSlider;
 
-   /****************************************************************************
-    * Init
-    */
+    /****************************************************************************
+     * Init
+     */
 
-   public void initialize()
-   {
-      // Add listener for volume slider (not sure how to add it in fxml)
-      volumeSlider.valueProperty().addListener(this::setVolume);
+    public void initialize()
+    {
+        // Add listener for volume slider (not sure how to add it in fxml)
+        volumeSlider.valueProperty().addListener(this::setVolume);
 
-      // Set the FileChooser configuration
-      fileChooser = new FileChooser();
-      fileChooser.setInitialDirectory(new File(App.ROOT_DIR + File.separator + App.CHARACTERS_DIR));
-      fileChooser.getExtensionFilters().addAll(
+        // Set the FileChooser configuration
+        fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(App.ROOT_DIR + File.separator + App.CHARACTERS_DIR));
+        fileChooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("JSON", "*.json")
-      );
+        );
 
-      // Initialize the list
-      songs = FXCollections.observableArrayList();
+        // Initialize the list
+        songs = FXCollections.observableArrayList();
 
-      songListView.setItems(songs);
-      songListView.getSelectionModel().selectFirst();
-      songListView.setOnMouseClicked(click ->
-      {
-         if(click.getClickCount() == 2)
-         {
-            play();
-         }
-      });
-   }
+        songListView.setItems(songs);
+        songListView.getSelectionModel().selectFirst();
+        songListView.setOnMouseClicked(click ->
+        {
+            if(click.getClickCount() == 2)
+            {
+                play();
+            }
+        });
+    }
 
-   /****************************************************************************
-    * Spell List Operations
-    */
+    /****************************************************************************
+     * Spell List Operations
+     */
 
-   @FXML
-   private void addSpell() throws IOException
-   {
-      var fxmlLoader = new FXMLLoader(getClass().getResource("AddSpellDialog.fxml"));
-      Parent parent = fxmlLoader.load();
-      var controller = fxmlLoader.<AddSpellDialog>getController();
+    @FXML
+    private void addSpell() throws IOException
+    {
+        var fxmlLoader = new FXMLLoader(getClass().getResource("AddSpellDialog.fxml"));
+        Parent parent = fxmlLoader.load();
+        var controller = fxmlLoader.<AddSpellDialog>getController();
 
-      var scene = new Scene(parent);
-      var stage = new Stage();
-      stage.initModality(Modality.APPLICATION_MODAL);
-      stage.setScene(scene);
-      stage.showAndWait();
+        var scene = new Scene(parent);
+        var stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
 
-      var newSpell = controller.getNewSpell();
-      if(newSpell != null)
-      {
-         loadedCharacter.addSpell(newSpell);
-         songs.add(newSpell);
-      }
+        var newSpell = controller.getNewSpell();
+        if(newSpell != null)
+        {
+            loadedCharacter.addSpell(newSpell);
+            songs.add(newSpell);
+        }
 
-   }
+    }
 
-   @FXML
-   private void editSpell() throws IOException
-   {
-      Spell spell = songListView.getSelectionModel().getSelectedItem();
-      if(spell != null)
-      {
-         var fxmlLoader = new FXMLLoader(getClass().getResource("EditSpellDialog.fxml"));
-         Parent parent = fxmlLoader.load();
-         var controller = fxmlLoader.<EditSpellDialog>getController();
+    @FXML
+    private void editSpell() throws IOException
+    {
+        Spell spell = songListView.getSelectionModel().getSelectedItem();
+        if(spell != null)
+        {
+            var fxmlLoader = new FXMLLoader(getClass().getResource("EditSpellDialog.fxml"));
+            Parent parent = fxmlLoader.load();
+            var controller = fxmlLoader.<EditSpellDialog>getController();
 
-         // If spell is changed, loadedCharacter should be updated automatically.
-         // Thanks, Java pointer-not-pointers!
-         controller.setSpell(spell);
+            // If spell is changed, loadedCharacter should be updated automatically.
+            // Thanks, Java pointer-not-pointers!
+            controller.setSpell(spell);
 
-         var scene = new Scene(parent);
-         var stage = new Stage();
-         stage.initModality(Modality.APPLICATION_MODAL);
-         stage.setScene(scene);
-         stage.showAndWait();
-      }
+            var scene = new Scene(parent);
+            var stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.showAndWait();
+        }
 
-   }
+    }
 
-   @FXML
-   private void removeSpell()
-   {
+    @FXML
+    private void removeSpell()
+    {
 
-   }
+    }
 
-   /****************************************************************************
-    * Audio playback
-    */
+    /****************************************************************************
+     * Audio playback
+     */
 
-   @FXML
-   private void play()
-   {
-      Spell song = songListView.getSelectionModel().getSelectedItem();
-      String filePath = new File(song.getAudio()).toURI().toString();
-      System.out.println("Playing audio: " + filePath);
-      Media media = new Media(filePath);
+    @FXML
+    private void play()
+    {
+        Spell song = songListView.getSelectionModel().getSelectedItem();
+        String filePath = new File(song.getAudio()).toURI().toString();
+        System.out.println("Playing audio: " + filePath);
+        Media media = new Media(filePath);
 
-      if(player != null && player.getStatus() == MediaPlayer.Status.PLAYING)
-      {
-         player.stop();
-      }
+        if(player != null && player.getStatus() == MediaPlayer.Status.PLAYING)
+        {
+            player.stop();
+        }
 
-      player = new MediaPlayer(media);
-      player.setOnError(() ->
-      {
-         throw player.getError();
-      });
+        player = new MediaPlayer(media);
+        player.setOnError(() ->
+        {
+            throw player.getError();
+        });
 
-      player.setVolume(volumeSlider.getValue());
-      player.play();
-      currentSong.setText(song.getName());
-   }
+        player.setVolume(volumeSlider.getValue());
+        player.play();
+        currentSong.setText(song.getName());
+    }
 
-   @FXML
-   private void stop()
-   {
-      if(player != null && player.getStatus() == MediaPlayer.Status.PLAYING)
-      {
-         player.stop();
-      }
-   }
+    @FXML
+    private void stop()
+    {
+        if(player != null && player.getStatus() == MediaPlayer.Status.PLAYING)
+        {
+            player.stop();
+        }
+    }
 
-   private void setVolume(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
-   {
-      if(player != null)
-      {
-         player.setVolume(newValue.doubleValue());
-      }
-   }
+    private void setVolume(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
+    {
+        if(player != null)
+        {
+            player.setVolume(newValue.doubleValue());
+        }
+    }
 
-   /****************************************************************************
-    * File menu
-    */
+    /****************************************************************************
+     * File menu
+     */
 
-   @FXML
-   private void open()
-   {
-      fileChooser.setTitle("Load Character");
-      var file = fileChooser.showOpenDialog(mainVBox.getScene().getWindow());
-      if(file != null)
-      {
-         loadedCharacter = new Character(file);
+    @FXML
+    private void open()
+    {
+        fileChooser.setTitle("Load Character");
+        var file = fileChooser.showOpenDialog(mainVBox.getScene().getWindow());
+        if(file != null)
+        {
+            loadedCharacter = new Character(file);
 
-         songs.clear();
-         songs.addAll(loadedCharacter.getSpells());
-      }
-   }
+            songs.clear();
+            songs.addAll(loadedCharacter.getSpells());
+        }
+    }
 
-   @FXML
-   private void save()
-   {
-      var file = new File(loadedCharacter.getSaveFile());
-      if(!file.exists())
-      {
-         saveAs();
-      }
+    @FXML
+    private void save()
+    {
+        var file = new File(loadedCharacter.getSaveFile());
+        if(!file.exists())
+        {
+            saveAs();
+        }
 
-      saveFile(file);
-   }
+        saveFile(file);
+    }
 
-   @FXML
-   private void saveAs()
-   {
-      fileChooser.setTitle("Save Character");
-      var file = fileChooser.showSaveDialog(mainVBox.getScene().getWindow());
-      saveFile(file);
-   }
+    @FXML
+    private void saveAs()
+    {
+        fileChooser.setTitle("Save Character");
+        var file = fileChooser.showSaveDialog(mainVBox.getScene().getWindow());
+        saveFile(file);
+    }
 
-   private void saveFile(File file)
-   {
-      String newJson = loadedCharacter.toJson();
-      try
-      {
-         Files.writeString(file.toPath(), newJson);
-      }
-      catch(IOException e)
-      {
-         e.printStackTrace();
-      }
-   }
+    private void saveFile(File file)
+    {
+        String newJson = loadedCharacter.toJson();
+        try
+        {
+            Files.writeString(file.toPath(), newJson);
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
 }

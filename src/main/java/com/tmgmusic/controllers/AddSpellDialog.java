@@ -1,7 +1,6 @@
 package com.tmgmusic.controllers;
 
 import com.tmgmusic.App;
-import com.tmgmusic.data.Character;
 import com.tmgmusic.data.Spell;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,54 +13,54 @@ import java.io.File;
 
 public class AddSpellDialog
 {
-   @FXML private TextField spellNameField;
-   @FXML private TextField filenameField;
+    @FXML private TextField spellNameField;
+    @FXML private TextField filenameField;
 
-   private Spell newSpell = null;
+    private Spell newSpell = null;
 
-   public void initialize()
-   {
+    public void initialize()
+    {
 
-   }
+    }
 
-   public Spell getNewSpell()
-   {
-      return newSpell;
-   }
+    public Spell getNewSpell()
+    {
+        return newSpell;
+    }
 
-   @FXML
-   private void browse()
-   {
-      FileChooser chooser = new FileChooser();
-      chooser.setInitialDirectory(new File(App.ROOT_DIR + File.separator + App.AUDIO_DIR));
-      chooser.getExtensionFilters().addAll(
+    @FXML
+    private void browse()
+    {
+        FileChooser chooser = new FileChooser();
+        chooser.setInitialDirectory(new File(App.ROOT_DIR + File.separator + App.AUDIO_DIR));
+        chooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("MP3", "*.mp3")
-      );
+        );
 
-      var newFile = chooser.showOpenDialog(null);
-      if(newFile != null && newFile.exists())
-      {
-         filenameField.setText(newFile.getAbsolutePath());
-      }
+        var newFile = chooser.showOpenDialog(null);
+        if(newFile != null && newFile.exists())
+        {
+            filenameField.setText(newFile.getAbsolutePath());
+        }
 
-   }
+    }
 
-   @FXML
-   private void okClicked(ActionEvent evt)
-   {
-      newSpell = new Spell(
-          spellNameField.getText(),
-          filenameField.getText()
-      );
+    @FXML
+    private void okClicked(ActionEvent evt)
+    {
+        newSpell = new Spell(
+            spellNameField.getText(),
+            filenameField.getText()
+        );
 
-      closeWindow(evt);
-   }
+        closeWindow(evt);
+    }
 
-   @FXML
-   private void closeWindow(ActionEvent evt)
-   {
-      Node src = (Node)evt.getSource();
-      Stage stage = (Stage)src.getScene().getWindow();
-      stage.close();
-   }
+    @FXML
+    private void closeWindow(ActionEvent evt)
+    {
+        Node src = (Node)evt.getSource();
+        Stage stage = (Stage)src.getScene().getWindow();
+        stage.close();
+    }
 }
