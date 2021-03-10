@@ -10,11 +10,11 @@ public class Spell implements Jsonable
    private String name;
    private String audio;
 
-//   public Spell(String name, String audioFilename)
-//   {
-//      this.name = name;
-//      this.audio = "";
-//   }
+   public Spell(String name, String audioFilename)
+   {
+      this.name = name;
+      this.audio = audioFilename;
+   }
 
    public Spell(JsonObject json)
    {

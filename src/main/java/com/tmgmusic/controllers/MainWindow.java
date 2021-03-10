@@ -31,7 +31,7 @@ import java.nio.file.Files;
 
 public class MainWindow
 {
-   private Character loadedCharacter;
+   private Character loadedCharacter = new Character();
 
    private FileChooser fileChooser;
    private ObservableList<Spell> songs;
@@ -77,8 +77,24 @@ public class MainWindow
     */
 
    @FXML
-   private void addSpell()
+   private void addSpell() throws IOException
    {
+      var fxmlLoader = new FXMLLoader(getClass().getResource("AddSpellDialog.fxml"));
+      Parent parent = fxmlLoader.load();
+      var controller = fxmlLoader.<AddSpellDialog>getController();
+
+      var scene = new Scene(parent);
+      var stage = new Stage();
+      stage.initModality(Modality.APPLICATION_MODAL);
+      stage.setScene(scene);
+      stage.showAndWait();
+
+      var newSpell = controller.getNewSpell();
+      if(newSpell != null)
+      {
+         loadedCharacter.addSpell(newSpell);
+         songs.add(newSpell);
+      }
 
    }
 
@@ -92,7 +108,8 @@ public class MainWindow
          Parent parent = fxmlLoader.load();
          var controller = fxmlLoader.<EditSpellDialog>getController();
 
-         controller.setCharacter(loadedCharacter);
+         // If spell is changed, loadedCharacter should be updated automatically.
+         // Thanks, Java pointer-not-pointers!
          controller.setSpell(spell);
 
          var scene = new Scene(parent);

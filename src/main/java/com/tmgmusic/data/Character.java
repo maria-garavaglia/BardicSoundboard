@@ -57,6 +57,15 @@ public class Character implements Jsonable
       return spells;
    }
 
+   public void addSpell(Spell newSpell)
+   {
+      spells.add(newSpell);
+   }
+
+   /****************************************************************************
+    * To/from JSON
+    */
+
    private JsonObject getJsonObject()
    {
       final JsonObject json = new JsonObject();

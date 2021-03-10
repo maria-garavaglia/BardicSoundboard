@@ -11,37 +11,29 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.nio.file.Paths;
 
-public class EditSpellDialog
+public class AddSpellDialog
 {
-   private Spell toEdit;
-
    @FXML private TextField spellNameField;
    @FXML private TextField filenameField;
 
-   public void setSpell(Spell spell)
-   {
-      this.toEdit = spell;
-      spellNameField.setText(toEdit.getName());
-      filenameField.setText(toEdit.getAudio());
-   }
+   private Spell newSpell = null;
 
    public void initialize()
    {
 
    }
 
+   public Spell getNewSpell()
+   {
+      return newSpell;
+   }
+
    @FXML
    private void browse()
    {
       FileChooser chooser = new FileChooser();
-      var initialFile = new File(toEdit.getAudio()).getParentFile();
-      chooser.setInitialDirectory(
-          initialFile == null
-        ? new File(System.getProperty("user.home"))
-        : initialFile
-      );
+      chooser.setInitialDirectory(new File(App.ROOT_DIR + File.separator + App.AUDIO_DIR));
       chooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("MP3", "*.mp3")
       );
@@ -57,8 +49,10 @@ public class EditSpellDialog
    @FXML
    private void okClicked(ActionEvent evt)
    {
-      toEdit.setName(spellNameField.getText());
-      toEdit.setAudio(filenameField.getText());
+      newSpell = new Spell(
+          spellNameField.getText(),
+          filenameField.getText()
+      );
 
       closeWindow(evt);
    }
