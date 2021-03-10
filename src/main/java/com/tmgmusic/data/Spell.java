@@ -26,8 +26,9 @@ public class Spell implements Jsonable
 
     public boolean equals(Spell rhs)
     {
-        return this.name.equals(rhs.name)
-            && this.audio.equals(rhs.audio);
+        // if the objects are the same, their JSON output should also be the same
+        // avoids needing to change equals() after adding/removing fields
+        return this.toJson().equals(rhs.toJson());
     }
 
     public String getName()
