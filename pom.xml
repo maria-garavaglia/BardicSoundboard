@@ -89,6 +89,44 @@
                 </configuration>
             </plugin>
 
+            <!-- Copies Audio/Characters folders to jlink image -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-audio</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/jlink-image/Audio</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>Audio</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-characters</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/jlink-image/Characters</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>Characters</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Moditect -->
             <plugin>
                 <groupId>org.moditect</groupId>

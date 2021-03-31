@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class MainWindow
 {
@@ -143,9 +144,15 @@ public class MainWindow
     private void play()
     {
         Spell song = songListView.getSelectionModel().getSelectedItem();
-        String filePath = new File(song.getAudio()).toURI().toString();
-        System.out.println("Playing audio: " + filePath);
-        Media media = new Media(filePath);
+        var file = new File(Paths.get(App.ROOT_DIR, App.AUDIO_DIR, song.getAudio()).toString());
+        if(!file.exists())
+        {
+            System.err.println("ERROR Audio file \"" + file.toURI().toString() + "\" does not exist.");
+            return;
+        }
+
+        System.out.println("Playing audio: " + file.toURI().toString());
+        Media media = new Media(file.toURI().toString());
 
         if(player != null && player.getStatus() == MediaPlayer.Status.PLAYING)
         {

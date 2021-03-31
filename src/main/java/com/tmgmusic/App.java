@@ -17,13 +17,13 @@ import java.nio.file.Paths;
  */
 public class App extends Application
 {
-    public static final String ROOT_DIR = System.getProperty("user.home") + File.separator + "Bardic_Soundboard";
-    public static final String CHARACTERS_DIR = "/Characters";
-    public static final String AUDIO_DIR = "/Audio";
+    public static final String ROOT_DIR = System.getProperty("user.dir");
+    public static final String CHARACTERS_DIR = "Characters";
+    public static final String AUDIO_DIR = "Audio";
 
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args)// throws IOException
     {
-        findOrCreateHomeDirs();
+//        findOrCreateHomeDirs();
 
         //Launch FX
         launch();
