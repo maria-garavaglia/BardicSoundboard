@@ -215,6 +215,8 @@ public class MainWindow
         }
 
         saveFile(file);
+
+        System.out.println("Character saved to '" + file.getAbsolutePath() + "'");
     }
 
     @FXML

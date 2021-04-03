@@ -46,7 +46,7 @@ public class EditSpellDialog
         var newFile = chooser.showOpenDialog(null);
         if(newFile != null && newFile.exists())
         {
-            filenameField.setText(newFile.getAbsolutePath());
+            filenameField.setText(newFile.getName());
         }
 
     }
