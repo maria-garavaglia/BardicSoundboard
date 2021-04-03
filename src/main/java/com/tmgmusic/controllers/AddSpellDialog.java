@@ -1,6 +1,6 @@
 package com.tmgmusic.controllers;
 
-import com.tmgmusic.App;
+import com.tmgmusic.data.Config;
 import com.tmgmusic.data.Spell;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +32,7 @@ public class AddSpellDialog
     private void browse()
     {
         FileChooser chooser = new FileChooser();
-        chooser.setInitialDirectory(new File(App.ROOT_DIR + File.separator + App.AUDIO_DIR));
+        chooser.setInitialDirectory(new File(Config.audioDir));
         chooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("MP3", "*.mp3")
         );
@@ -40,9 +40,8 @@ public class AddSpellDialog
         var newFile = chooser.showOpenDialog(null);
         if(newFile != null && newFile.exists())
         {
-            filenameField.setText(newFile.getAbsolutePath());
+            filenameField.setText(newFile.getName());
         }
-
     }
 
     @FXML

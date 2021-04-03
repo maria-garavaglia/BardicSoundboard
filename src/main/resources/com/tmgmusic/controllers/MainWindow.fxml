@@ -8,10 +8,11 @@
     <MenuBar>
         <Menu text="File">
 <!--            <MenuItem text="New"/>-->
-            <MenuItem onAction="#open" text="Open"/>
+            <MenuItem onAction="#open" text="Open..."/>
             <MenuItem onAction="#save" text="Save"/>
             <MenuItem onAction="#saveAs" text="Save As..."/>
-<!--            <SeparatorMenuItem  />-->
+            <SeparatorMenuItem  />
+            <MenuItem onAction="#openPreferences" text="Preferences..."/>
 <!--            <MenuItem text="Exit"/>-->
         </Menu>
         <Menu text="Help">

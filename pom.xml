@@ -43,6 +43,11 @@
             <artifactId>javafx-media</artifactId>
             <version>${javafxVersion}</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafxVersion}</version>
+        </dependency>
         <!--/java FX-->
 
     </dependencies>

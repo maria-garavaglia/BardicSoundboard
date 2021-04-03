@@ -1,7 +1,7 @@
 package com.tmgmusic.controllers;
 
-import com.tmgmusic.App;
 import com.tmgmusic.data.Character;
+import com.tmgmusic.data.Config;
 import com.tmgmusic.data.Spell;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -47,7 +47,7 @@ public class MainWindow
 
         // Set the FileChooser configuration
         fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File(App.ROOT_DIR + File.separator + App.CHARACTERS_DIR));
+        fileChooser.setInitialDirectory(new File(Config.charactersDir));
         fileChooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("JSON", "*.json")
         );
@@ -144,7 +144,7 @@ public class MainWindow
     private void play()
     {
         Spell song = songListView.getSelectionModel().getSelectedItem();
-        var file = new File(Paths.get(App.ROOT_DIR, App.AUDIO_DIR, song.getAudio()).toString());
+        var file = new File(Paths.get(Config.audioDir, song.getAudio()).toString());
         if(!file.exists())
         {
             System.err.println("ERROR Audio file \"" + file.toURI().toString() + "\" does not exist.");
@@ -236,6 +236,20 @@ public class MainWindow
         {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void openPreferences() throws IOException
+    {
+        var fxmlLoader = new FXMLLoader(getClass().getResource("PreferencesDialog.fxml"));
+        Parent parent = fxmlLoader.load();
+        var controller = fxmlLoader.<PreferencesDialog>getController();
+
+        var scene = new Scene(parent);
+        var stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
     }
 
 }
