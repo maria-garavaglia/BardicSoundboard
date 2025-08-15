@@ -20,13 +20,6 @@
             <version>3.1.1</version>
         </dependency>
 
-        <!-- Reflection library (not modular) -->
-        <dependency>
-            <groupId>io.github.classgraph</groupId>
-            <artifactId>classgraph</artifactId>
-            <version>4.8.102</version>
-        </dependency>
-
         <!-- javaFX (all modular) -->
         <dependency>
             <groupId>org.openjfx</groupId>
