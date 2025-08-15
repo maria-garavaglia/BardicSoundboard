@@ -1,8 +1,8 @@
-package com.tmgmusic.controllers;
+package com.dearmariarenie.BardicSoundboard.controllers;
 
-import com.tmgmusic.data.Character;
-import com.tmgmusic.data.Config;
-import com.tmgmusic.data.Spell;
+import com.dearmariarenie.BardicSoundboard.data.Character;
+import com.dearmariarenie.BardicSoundboard.data.Config;
+import com.dearmariarenie.BardicSoundboard.data.Spell;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

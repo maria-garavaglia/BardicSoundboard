@@ -1,4 +1,4 @@
-package com.tmgmusic.data;
+package com.dearmariarenie.BardicSoundboard.data;
 
 import com.github.cliftonlabs.json_simple.JsonKey;
 import com.github.cliftonlabs.json_simple.JsonObject;

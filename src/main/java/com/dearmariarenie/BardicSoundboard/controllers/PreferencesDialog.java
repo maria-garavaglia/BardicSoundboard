@@ -1,7 +1,7 @@
-package com.tmgmusic.controllers;
+package com.dearmariarenie.BardicSoundboard.controllers;
 
-import com.tmgmusic.App;
-import com.tmgmusic.data.Config;
+import com.dearmariarenie.BardicSoundboard.App;
+import com.dearmariarenie.BardicSoundboard.data.Config;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

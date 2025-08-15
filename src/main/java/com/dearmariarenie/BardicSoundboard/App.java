@@ -1,18 +1,12 @@
-package com.tmgmusic;
+package com.dearmariarenie.BardicSoundboard;
 
-import com.tmgmusic.data.Config;
-import io.github.classgraph.ClassGraph;
-import io.github.classgraph.ScanResult;
+import com.dearmariarenie.BardicSoundboard.data.Config;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * JavaFX App

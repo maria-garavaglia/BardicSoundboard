@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <GridPane prefHeight="125.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/11.0.1"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tmgmusic.controllers.PreferencesDialog">
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dearmariarenie.BardicSoundboard.controllers.PreferencesDialog">
     <Label text="Characters Directory" GridPane.halignment="RIGHT">
         <padding>
             <Insets right="5.0"/>
