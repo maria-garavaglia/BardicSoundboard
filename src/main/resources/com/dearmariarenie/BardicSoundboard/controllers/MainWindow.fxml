@@ -7,17 +7,22 @@
       fx:controller="com.dearmariarenie.BardicSoundboard.controllers.MainWindow">
     <MenuBar>
         <Menu text="File">
-<!--            <MenuItem text="New"/>-->
             <MenuItem onAction="#open" text="Open..."/>
             <MenuItem onAction="#save" text="Save"/>
             <MenuItem onAction="#saveAs" text="Save As..."/>
-<!--            <MenuItem text="Exit"/>-->
         </Menu>
     </MenuBar>
     <VBox>
         <padding>
             <Insets bottom="5" left="5" right="5" top="5"/>
         </padding>
+        <HBox spacing="5" alignment="BASELINE_LEFT">
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </padding>
+            <Label text="Character Name"/>
+            <TextField fx:id="charNameField"/>
+        </HBox>
         <HBox spacing="5">
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>

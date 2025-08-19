@@ -2,27 +2,27 @@
 	"charName":"Hrothgar Hammerfall",
 	"spells":[
 		{
-			"file":"Audio/Eddie_AnvilOfBurden_A.mp3",
+			"file":"Audio\/Eddie_AnvilOfBurden_A.mp3",
 			"name":"True Strike"
 		},
 		{
-			"file":"Audio/Eddie_CallOfTheWild_A.mp3",
+			"file":"Audio\/Eddie_CallOfTheWild_A.mp3",
 			"name":"Animal Friendship"
 		},
 		{
-			"file":"Audio/Eddie_BattleCry_A.mp3",
+			"file":"Audio\/Eddie_BattleCry_A.mp3",
 			"name":"Heroism"
 		},
 		{
-			"file":"Audio/Strum_EarthShaker_02.mp3",
+			"file":"Audio\/Strum_EarthShaker_02.mp3",
 			"name":"Thunderwave"
 		},
 		{
-			"file":"Audio/Ophelia_RallyArmy_A.mp3",
+			"file":"Audio\/Ophelia_RallyArmy_A.mp3",
 			"name":"Unseen Servant"
 		},
 		{
-			"file":"Audio/Hrothgar_Cure_Wounds.mp3",
+			"file":"Audio\/Hrothgar_Cure_Wounds.mp3",
 			"name":"Cure Wounds"
 		}
 	]

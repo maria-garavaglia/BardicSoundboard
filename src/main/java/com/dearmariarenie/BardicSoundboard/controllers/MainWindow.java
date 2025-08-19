@@ -30,6 +30,7 @@ public class MainWindow
     private MediaPlayer player;
 
     @FXML private VBox mainVBox;
+    @FXML private TextField charNameField;
     @FXML private ListView<Spell> songListView;
     @FXML private Label currentSong;
     @FXML private Slider volumeSlider;
@@ -40,6 +41,12 @@ public class MainWindow
 
     public void initialize()
     {
+        charNameField.focusedProperty().addListener((o, oldVal, newVal) -> {
+            if (!newVal) // focus lost
+            {
+                loadedCharacter.setName(charNameField.getText());
+            }
+        });
         // Add listener for volume slider (not sure how to add it in fxml)
         volumeSlider.valueProperty().addListener(this::setVolume);
 
@@ -145,11 +152,11 @@ public class MainWindow
         var file = new File(song.getAudio());
         if(!file.exists())
         {
-            System.err.println("ERROR Audio file \"" + file.toURI().toString() + "\" does not exist.");
+            System.err.println("ERROR Audio file \"" + file.toURI() + "\" does not exist.");
             return;
         }
 
-        System.out.println("Playing audio: " + file.toURI().toString());
+        System.out.println("Playing audio: " + file.toURI());
         Media media = new Media(file.toURI().toString());
 
         if(player != null && player.getStatus() == MediaPlayer.Status.PLAYING)
@@ -198,6 +205,7 @@ public class MainWindow
         {
             loadedCharacter = new Character(file);
 
+            charNameField.setText(loadedCharacter.getName());
             songs.clear();
             songs.addAll(loadedCharacter.getSpells());
         }
@@ -212,6 +220,9 @@ public class MainWindow
             saveAs();
         }
 
+        // make sure character name is saved (focus listeners don't always work, need to look into)
+        loadedCharacter.setName(charNameField.getText());
+
         saveFile(file);
 
         System.out.println("Character saved to '" + file.getAbsolutePath() + "'");
@@ -220,6 +231,9 @@ public class MainWindow
     @FXML
     private void saveAs()
     {
+        // make sure character name is saved (focus listeners don't always work, need to look into)
+        loadedCharacter.setName(charNameField.getText());
+
         fileChooser.setTitle("Save Character");
         var file = fileChooser.showSaveDialog(mainVBox.getScene().getWindow());
         saveFile(file);
