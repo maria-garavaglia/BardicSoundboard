@@ -1,6 +1,5 @@
 package com.dearmariarenie.BardicSoundboard;
 
-import com.dearmariarenie.BardicSoundboard.data.Config;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,13 +12,8 @@ import java.io.IOException;
  */
 public class App extends Application
 {
-    public static Config config;
-
-
     public static void main(String[] args)
     {
-        config = new Config();
-
         //Launch FX
         launch();
     }

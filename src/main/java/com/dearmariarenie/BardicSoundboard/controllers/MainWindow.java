@@ -1,7 +1,6 @@
 package com.dearmariarenie.BardicSoundboard.controllers;
 
 import com.dearmariarenie.BardicSoundboard.data.Character;
-import com.dearmariarenie.BardicSoundboard.data.Config;
 import com.dearmariarenie.BardicSoundboard.data.Spell;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -47,7 +46,7 @@ public class MainWindow
 
         // Set the FileChooser configuration
         fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File(Config.charactersDir));
+        fileChooser.setInitialDirectory(new File("."));
         fileChooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("JSON", "*.json")
         );
@@ -144,7 +143,7 @@ public class MainWindow
     private void play()
     {
         Spell song = songListView.getSelectionModel().getSelectedItem();
-        var file = new File(Paths.get(Config.audioDir, song.getAudio()).toString());
+        var file = new File(song.getAudio());
         if(!file.exists())
         {
             System.err.println("ERROR Audio file \"" + file.toURI().toString() + "\" does not exist.");
@@ -238,20 +237,6 @@ public class MainWindow
         {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    private void openPreferences() throws IOException
-    {
-        var fxmlLoader = new FXMLLoader(getClass().getResource("PreferencesDialog.fxml"));
-        Parent parent = fxmlLoader.load();
-        var controller = fxmlLoader.<PreferencesDialog>getController();
-
-        var scene = new Scene(parent);
-        var stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(scene);
-        stage.showAndWait();
     }
 
 }

@@ -1,6 +1,5 @@
 package com.dearmariarenie.BardicSoundboard.controllers;
 
-import com.dearmariarenie.BardicSoundboard.data.Config;
 import com.dearmariarenie.BardicSoundboard.data.Spell;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +31,7 @@ public class AddSpellDialog
     private void browse()
     {
         FileChooser chooser = new FileChooser();
-        chooser.setInitialDirectory(new File(Config.audioDir));
+        chooser.setInitialDirectory(new File("."));
         chooser.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("MP3", "*.mp3")
         );
@@ -40,7 +39,7 @@ public class AddSpellDialog
         var newFile = chooser.showOpenDialog(null);
         if(newFile != null && newFile.exists())
         {
-            filenameField.setText(newFile.getName());
+            filenameField.setText(newFile.getAbsolutePath());
         }
     }
 
