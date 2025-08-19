@@ -2,6 +2,11 @@ package com.dearmariarenie.BardicSoundboard.controllers;
 
 import com.dearmariarenie.BardicSoundboard.data.Character;
 import com.dearmariarenie.BardicSoundboard.data.Spell;
+import com.dearmariarenie.BardicSoundboard.utils.Fmt;
+import com.github.cliftonlabs.json_simple.JsonException;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,19 +15,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MainWindow
 {
+    private static final Logger logger = LoggerFactory.getLogger(MainWindow.class);
+
     private Character loadedCharacter = new Character();
 
     private FileChooser fileChooser;
@@ -152,11 +158,11 @@ public class MainWindow
         var file = new File(song.getAudio());
         if(!file.exists())
         {
-            System.err.println("ERROR Audio file \"" + file.toURI() + "\" does not exist.");
+            logger.error("Audio file {} does not exist.", file.getAbsolutePath());
             return;
         }
 
-        System.out.println("Playing audio: " + file.toURI());
+        logger.info("Playing audio: {}", file.getAbsolutePath());
         Media media = new Media(file.toURI().toString());
 
         if(player != null && player.getStatus() == MediaPlayer.Status.PLAYING)
@@ -203,11 +209,24 @@ public class MainWindow
         var file = fileChooser.showOpenDialog(mainVBox.getScene().getWindow());
         if(file != null)
         {
-            loadedCharacter = new Character(file);
-
-            charNameField.setText(loadedCharacter.getName());
-            songs.clear();
-            songs.addAll(loadedCharacter.getSpells());
+            try
+            {
+                loadedCharacter = new Character(file);
+                charNameField.setText(loadedCharacter.getName());
+                songs.clear();
+                songs.addAll(loadedCharacter.getSpells());
+            }
+            catch(IOException | JsonException e)
+            {
+                logger.error("Failed to load file {}", file.getName(), e);
+                var alert = new Alert(AlertType.ERROR);
+                alert.setContentText(Fmt.format(
+                    "Failed to load file '{}'. Check the logs for more information.",
+                    file.getName()
+                ));
+                alert.setTitle("Load Failed");
+                alert.showAndWait();
+            }
         }
     }
 
@@ -225,7 +244,7 @@ public class MainWindow
 
         saveFile(file);
 
-        System.out.println("Character saved to '" + file.getAbsolutePath() + "'");
+        logger.info("Character saved to {}", file.getAbsolutePath());
     }
 
     @FXML
@@ -248,7 +267,15 @@ public class MainWindow
         }
         catch(IOException e)
         {
-            e.printStackTrace();
+            logger.error(
+                "Failed to save to file {}",
+                loadedCharacter.getSaveFile(),
+                e
+            );
+            var alert = new Alert(AlertType.ERROR);
+            alert.setContentText("Failed to save character. Check the logs for more information.");
+            alert.setTitle("Save Failed");
+            alert.showAndWait();
         }
     }
 

@@ -20,7 +20,7 @@ public class Character implements Jsonable
         name = "New Character";
     }
 
-    public Character(File savedFile)
+    public Character(File savedFile) throws IOException, JsonException
     {
         saveFilename = savedFile.getPath();
         try(var reader = new FileReader(savedFile))
@@ -34,10 +34,6 @@ public class Character implements Jsonable
                 var newSpell = new Spell(spellsJson.getMap(index));
                 spells.add(newSpell);
             }
-        }
-        catch(IOException | JsonException e)
-        {
-            e.printStackTrace();
         }
 
     }
