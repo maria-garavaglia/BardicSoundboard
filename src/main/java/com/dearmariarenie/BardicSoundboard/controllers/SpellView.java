@@ -10,33 +10,36 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-public class AddSpellDialog
+public class SpellView
 {
+    private Spell toEdit = new Spell("", "");
+
     @FXML private TextField spellNameField;
     @FXML private TextField filenameField;
 
-    private Spell newSpell = null;
+    private final FileChooser fileChooser = new FileChooser();
+
+    public void setSpell(Spell spell)
+    {
+        this.toEdit = spell;
+        spellNameField.setText(toEdit.getName());
+        filenameField.setText(toEdit.getAudio());
+    }
+
+    public Spell getSpell()
+    {
+        return toEdit;
+    }
 
     public void initialize()
     {
-
-    }
-
-    public Spell getNewSpell()
-    {
-        return newSpell;
+        fileChooser.setInitialDirectory(new File("Audio"));
     }
 
     @FXML
     private void browse()
     {
-        FileChooser chooser = new FileChooser();
-        chooser.setInitialDirectory(new File("."));
-        chooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("MP3", "*.mp3")
-        );
-
-        var newFile = chooser.showOpenDialog(null);
+        var newFile = fileChooser.showOpenDialog(null);
         if(newFile != null && newFile.exists())
         {
             filenameField.setText(newFile.getAbsolutePath());
@@ -46,10 +49,8 @@ public class AddSpellDialog
     @FXML
     private void okClicked(ActionEvent evt)
     {
-        newSpell = new Spell(
-            spellNameField.getText(),
-            filenameField.getText()
-        );
+        toEdit.setName(spellNameField.getText());
+        toEdit.setAudio(filenameField.getText());
 
         closeWindow(evt);
     }

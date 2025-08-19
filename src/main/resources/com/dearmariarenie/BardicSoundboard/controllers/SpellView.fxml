@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.dearmariarenie.BardicSoundboard.controllers.EditSpellDialog">
+            fx:controller="com.dearmariarenie.BardicSoundboard.controllers.SpellView">
     <VBox>
         <padding>
             <Insets topRightBottomLeft="10"/>

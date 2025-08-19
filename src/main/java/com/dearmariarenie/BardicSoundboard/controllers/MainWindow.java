@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class MainWindow
 {
@@ -72,9 +71,9 @@ public class MainWindow
     @FXML
     private void addSpell() throws IOException
     {
-        var fxmlLoader = new FXMLLoader(getClass().getResource("AddSpellDialog.fxml"));
+        var fxmlLoader = new FXMLLoader(getClass().getResource("SpellView.fxml"));
         Parent parent = fxmlLoader.load();
-        var controller = fxmlLoader.<AddSpellDialog>getController();
+        var controller = fxmlLoader.<SpellView>getController();
 
         var scene = new Scene(parent);
         var stage = new Stage();
@@ -82,7 +81,7 @@ public class MainWindow
         stage.setScene(scene);
         stage.showAndWait();
 
-        var newSpell = controller.getNewSpell();
+        var newSpell = controller.getSpell();
         if(newSpell != null)
         {
             loadedCharacter.addSpell(newSpell);
@@ -97,9 +96,9 @@ public class MainWindow
         Spell spell = songListView.getSelectionModel().getSelectedItem();
         if(spell != null)
         {
-            var fxmlLoader = new FXMLLoader(getClass().getResource("EditSpellDialog.fxml"));
+            var fxmlLoader = new FXMLLoader(getClass().getResource("SpellView.fxml"));
             Parent parent = fxmlLoader.load();
-            var controller = fxmlLoader.<EditSpellDialog>getController();
+            var controller = fxmlLoader.<SpellView>getController();
 
             // If spell is changed, loadedCharacter should be updated automatically.
             // Thanks, Java pointer-not-pointers!
